@@ -49,4 +49,12 @@ public class Match {
     public void setSecondPlayer(Player secondPlayer) {
         this.secondPlayer = secondPlayer;
     }
+
+    @Override
+    public String toString() {
+        return "Match{" +
+                "firstPlayer=" + firstPlayer +
+                ", secondPlayer=" + secondPlayer +
+                '}';
+    }
 }

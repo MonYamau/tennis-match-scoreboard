@@ -13,6 +13,9 @@
     <property name="hibernate.hikari.maximumPoolSize">5</property>
     <property name="hibernate.hikari.connectionTimeout">20000</property>
 
+    <mapping class="com.project.model.Match"/>
+    <mapping class="com.project.model.Player"/>
+
     <!-- DB schema will be updated if needed -->
     <!-- <property name="hibernate.hbm2ddl.auto">update</property> -->
   </session-factory>

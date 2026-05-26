@@ -10,7 +10,7 @@ import java.util.stream.Stream;
 @Table(name = "Players")
 public class Player {
     @Id
-    @Column(name = "id")
+    @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
@@ -37,6 +37,15 @@ public class Player {
                 .collect(Collectors.toList());
     }
 
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public String getName() {
         return name;
     }
@@ -59,5 +68,13 @@ public class Player {
 
     public void setMatchesBySecondPlayer(List<Match> matchesBySecondPlayer) {
         this.matchesBySecondPlayer = matchesBySecondPlayer;
+    }
+
+    @Override
+    public String toString() {
+        return "Player{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
     }
 }
