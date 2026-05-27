@@ -18,12 +18,17 @@ public class Match {
     @JoinColumn(name = "SECOND_PLAYER", referencedColumnName = "id")
     private Player secondPlayer;
 
+    @ManyToOne
+    @JoinColumn(name = "WINNER", referencedColumnName = "id")
+    private Player winner;
+
     public Match() {
     }
 
-    public Match(Player firstPlayer, Player secondPlayer) {
+    public Match(Player firstPlayer, Player secondPlayer, Player winner) {
         this.firstPlayer = firstPlayer;
         this.secondPlayer = secondPlayer;
+        this.winner = winner;
     }
 
     public int getId() {
@@ -50,10 +55,19 @@ public class Match {
         this.secondPlayer = secondPlayer;
     }
 
+    public Player getWinner() {
+        return winner;
+    }
+
+    public void setWinner(Player winner) {
+        this.winner = winner;
+    }
+
     @Override
     public String toString() {
         return "Match{" +
-                "firstPlayer=" + firstPlayer +
+                "id=" + id +
+                ", firstPlayer=" + firstPlayer +
                 ", secondPlayer=" + secondPlayer +
                 '}';
     }

@@ -26,13 +26,17 @@ public class Player {
     public Player() {
     }
 
+    public Player(String name) {
+        this.name = name;
+    }
+
     public Player(String name, List<Match> matchesByFirstPlayer, List<Match> matchesBySecondPlayer) {
         this.name = name;
         this.matchesByFirstPlayer = matchesByFirstPlayer;
         this.matchesBySecondPlayer = matchesBySecondPlayer;
     }
 
-    public List<Match> getAllMatches(List<Match> matchesByFirstPlayer, List<Match> matchesBySecondPlayer) {
+    public List<Match> getAllMatches() {
         return Stream.concat(matchesByFirstPlayer.stream(), matchesBySecondPlayer.stream())
                 .collect(Collectors.toList());
     }
