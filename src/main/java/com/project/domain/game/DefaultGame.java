@@ -1,13 +1,17 @@
-package com.project.domain;
+package com.project.domain.game;
+
+import com.project.domain.PlayerNumber;
+import com.project.domain.Point;
 
 import java.util.Optional;
 
-public class TennisGame {
+public class DefaultGame implements GameMode {
     private static final int THIRTY_ORDINAL_NUMBER = Point.THIRTY.ordinal();
+
     private Point firstPlayerScore;
     private Point secondPlayerScore;
 
-    public TennisGame() {
+    public DefaultGame() {
         this.firstPlayerScore = Point.ZERO;
         this.secondPlayerScore = Point.ZERO;
     }
@@ -20,11 +24,12 @@ public class TennisGame {
         return secondPlayerScore;
     }
 
+    @Override
     public Optional<PlayerNumber> recalculateScoreFor(PlayerNumber player) {
+        incrementScoreFor(player);
         if (isWin(player)) {
             return Optional.of(player);
         }
-        incrementScoreFor(player);
         checkDeuce();
         return Optional.empty();
     }
@@ -38,7 +43,6 @@ public class TennisGame {
     }
 
     private boolean isWin(PlayerNumber playerNumber) {
-
         if (playerNumber.equals(PlayerNumber.FIRST_PLAYER)) {
             return isWinOfFirstPlayer();
         }
@@ -46,17 +50,17 @@ public class TennisGame {
     }
 
     private boolean isWinOfFirstPlayer() {
-        if (firstPlayerScore.equals(Point.FORTY) && (secondPlayerScore.ordinal() <= THIRTY_ORDINAL_NUMBER)) {
+        if (firstPlayerScore.equals(Point.ADVANTAGE) && (secondPlayerScore.ordinal() <= THIRTY_ORDINAL_NUMBER)) {
             return true;
         }
-        return firstPlayerScore.equals(Point.ADVANTAGE) && secondPlayerScore.equals(Point.FORTY);
+        return firstPlayerScore.equals(Point.GAME) && secondPlayerScore.equals(Point.FORTY);
     }
 
     private boolean isWinOfSecondPlayer() {
-        if (secondPlayerScore.equals(Point.FORTY) && (firstPlayerScore.ordinal() <= THIRTY_ORDINAL_NUMBER)) {
+        if (secondPlayerScore.equals(Point.ADVANTAGE) && (firstPlayerScore.ordinal() <= THIRTY_ORDINAL_NUMBER)) {
             return true;
         }
-        return secondPlayerScore.equals(Point.ADVANTAGE) && firstPlayerScore.equals(Point.FORTY);
+        return secondPlayerScore.equals(Point.GAME) && firstPlayerScore.equals(Point.FORTY);
     }
 
     private void checkDeuce() {

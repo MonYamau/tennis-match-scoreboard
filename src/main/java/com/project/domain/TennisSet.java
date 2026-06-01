@@ -1,19 +1,24 @@
 package com.project.domain;
 
+import com.project.domain.game.DefaultGame;
+import com.project.domain.game.GameMode;
+import com.project.domain.game.TieBreakGame;
+
 import java.util.Optional;
 
 public class TennisSet {
     private static final int PREPONDERANCE = 2;
     private static final int MIN_VALUE_SCORE = 6;
+    private static final int TIE_BREAK_WIN = 7;
 
     private int firstPlayerScore;
     private int secondPlayerScore;
-    private TennisGame currentGame;
+    private GameMode currentGame;
 
     public TennisSet() {
         this.firstPlayerScore = 0;
         this.secondPlayerScore = 0;
-        this.currentGame = new TennisGame();
+        this.currentGame = new DefaultGame();
     }
 
     public int getFirstPlayerScore() {
@@ -24,7 +29,7 @@ public class TennisSet {
         return secondPlayerScore;
     }
 
-    public TennisGame getCurrentGame() {
+    public GameMode getCurrentGame() {
         return currentGame;
     }
 
@@ -35,10 +40,9 @@ public class TennisSet {
         }
         incrementScoreFor(player);
         if (isWin(player)) {
-            currentGame = new TennisGame();
+            setupGameMode();
             return Optional.of(player);
         }
-        checkTieBreak();
         return Optional.empty();
     }
 
@@ -58,17 +62,24 @@ public class TennisSet {
     }
 
     private boolean isWinOfFirstPlayer() {
+        if (currentGame.getClass().equals(TieBreakGame.class)) {
+            return firstPlayerScore == TIE_BREAK_WIN;
+        }
         return firstPlayerScore >= MIN_VALUE_SCORE && (firstPlayerScore - secondPlayerScore >= PREPONDERANCE);
     }
 
     private boolean isWinOfSecondPlayer() {
+        if (currentGame.getClass().equals(TieBreakGame.class)) {
+            return secondPlayerScore == TIE_BREAK_WIN;
+        }
         return secondPlayerScore >= MIN_VALUE_SCORE && (secondPlayerScore - firstPlayerScore >= PREPONDERANCE);
     }
 
-    //ДОРАБОТАТЬ
-    private void checkTieBreak() {
+    private void setupGameMode() {
         if (firstPlayerScore == MIN_VALUE_SCORE && secondPlayerScore == MIN_VALUE_SCORE) {
-
+            currentGame = new TieBreakGame();
+        } else {
+            currentGame = new DefaultGame();
         }
     }
 }

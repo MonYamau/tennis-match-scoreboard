@@ -5,18 +5,28 @@ public enum Point {
     FIFTEEN,
     THIRTY,
     FORTY,
-    ADVANTAGE;
+    ADVANTAGE,
+    GAME;
 
     public Point next() {
-        if (this.equals(ZERO)) {
-            return FIFTEEN;
+        switch (this) {
+            case ZERO -> {
+                return FIFTEEN;
+            }
+            case FIFTEEN -> {
+                return THIRTY;
+            }
+            case THIRTY -> {
+                return FORTY;
+            }
+            case FORTY -> {
+                return ADVANTAGE;
+            }
+            case ADVANTAGE -> {
+                return GAME;
+            }
+            //СМЕНИТЬ ИСКЛЮЧЕНИЕ
+            default -> throw new RuntimeException();
         }
-        else if (this.equals(FIFTEEN)) {
-            return THIRTY;
-        }
-        else if (this.equals(THIRTY)) {
-            return FORTY;
-        }
-        return ADVANTAGE;
     }
 }
