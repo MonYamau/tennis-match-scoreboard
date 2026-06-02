@@ -1,7 +1,10 @@
 package com.project.domain;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+
 import java.util.Optional;
 
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class TennisMatch {
     private static final int FINAL_SCORE = 2;
 
@@ -15,18 +18,6 @@ public class TennisMatch {
         this.currentSet = new TennisSet();
     }
 
-    public int getFirstPlayerScore() {
-        return firstPlayerScore;
-    }
-
-    public int getSecondPlayerScore() {
-        return secondPlayerScore;
-    }
-
-    public TennisSet getCurrentSet() {
-        return currentSet;
-    }
-
     public Optional<PlayerNumber> recalculateScoreFor(PlayerNumber player) {
         Optional<PlayerNumber> setWinner = currentSet.recalculateScoreFor(player);
         if (setWinner.isEmpty()) {
@@ -37,6 +28,7 @@ public class TennisMatch {
             currentSet = new TennisSet();
             return Optional.of(player);
         }
+        currentSet = new TennisSet();
         return Optional.empty();
     }
 

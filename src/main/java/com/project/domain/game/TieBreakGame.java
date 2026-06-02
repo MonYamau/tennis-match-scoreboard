@@ -1,9 +1,11 @@
 package com.project.domain.game;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.project.domain.PlayerNumber;
 
 import java.util.Optional;
 
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class TieBreakGame implements GameMode {
     private static final int PREPONDERANCE = 2;
     private static final int MIN_VALUE_SCORE = 7;

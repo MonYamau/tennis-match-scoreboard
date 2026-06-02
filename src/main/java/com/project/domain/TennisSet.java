@@ -1,11 +1,13 @@
 package com.project.domain;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.project.domain.game.DefaultGame;
 import com.project.domain.game.GameMode;
 import com.project.domain.game.TieBreakGame;
 
 import java.util.Optional;
 
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class TennisSet {
     private static final int PREPONDERANCE = 2;
     private static final int MIN_VALUE_SCORE = 6;
@@ -21,18 +23,6 @@ public class TennisSet {
         this.currentGame = new DefaultGame();
     }
 
-    public int getFirstPlayerScore() {
-        return firstPlayerScore;
-    }
-
-    public int getSecondPlayerScore() {
-        return secondPlayerScore;
-    }
-
-    public GameMode getCurrentGame() {
-        return currentGame;
-    }
-
     public Optional<PlayerNumber> recalculateScoreFor(PlayerNumber player) {
         Optional<PlayerNumber> gameWinner = currentGame.recalculateScoreFor(player);
         if (gameWinner.isEmpty()) {
@@ -43,6 +33,7 @@ public class TennisSet {
             setupGameMode();
             return Optional.of(player);
         }
+        setupGameMode();
         return Optional.empty();
     }
 

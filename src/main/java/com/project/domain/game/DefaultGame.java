@@ -1,10 +1,12 @@
 package com.project.domain.game;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.project.domain.PlayerNumber;
 import com.project.domain.Point;
 
 import java.util.Optional;
 
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class DefaultGame implements GameMode {
     private static final int THIRTY_ORDINAL_NUMBER = Point.THIRTY.ordinal();
 
@@ -14,14 +16,6 @@ public class DefaultGame implements GameMode {
     public DefaultGame() {
         this.firstPlayerScore = Point.ZERO;
         this.secondPlayerScore = Point.ZERO;
-    }
-
-    public Point getFirstPlayerScore() {
-        return firstPlayerScore;
-    }
-
-    public Point getSecondPlayerScore() {
-        return secondPlayerScore;
     }
 
     @Override
