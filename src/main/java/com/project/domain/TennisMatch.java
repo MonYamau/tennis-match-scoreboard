@@ -1,10 +1,7 @@
 package com.project.domain;
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
-
 import java.util.Optional;
 
-@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class TennisMatch {
     private static final int FINAL_SCORE = 2;
 
@@ -16,6 +13,30 @@ public class TennisMatch {
         this.firstPlayerScore = 0;
         this.secondPlayerScore = 0;
         this.currentSet = new TennisSet();
+    }
+
+    public void setFirstPlayerScore(int firstPlayerScore) {
+        this.firstPlayerScore = firstPlayerScore;
+    }
+
+    public void setSecondPlayerScore(int secondPlayerScore) {
+        this.secondPlayerScore = secondPlayerScore;
+    }
+
+    public void setCurrentSet(TennisSet currentSet) {
+        this.currentSet = currentSet;
+    }
+
+    public int getFirstPlayerScore() {
+        return firstPlayerScore;
+    }
+
+    public int getSecondPlayerScore() {
+        return secondPlayerScore;
+    }
+
+    public TennisSet getCurrentSet() {
+        return currentSet;
     }
 
     public Optional<PlayerNumber> recalculateScoreFor(PlayerNumber player) {

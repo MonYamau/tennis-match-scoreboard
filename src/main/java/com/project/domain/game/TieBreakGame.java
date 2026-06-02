@@ -1,11 +1,9 @@
 package com.project.domain.game;
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.project.domain.PlayerNumber;
 
 import java.util.Optional;
 
-@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class TieBreakGame implements GameMode {
     private static final int PREPONDERANCE = 2;
     private static final int MIN_VALUE_SCORE = 7;
@@ -16,6 +14,27 @@ public class TieBreakGame implements GameMode {
     public TieBreakGame() {
         this.firstPlayerScore = 0;
         this.secondPlayerScore = 0;
+    }
+
+    public TieBreakGame(int firstPlayerScore, int secondPlayerScore) {
+        this.firstPlayerScore = firstPlayerScore;
+        this.secondPlayerScore = secondPlayerScore;
+    }
+
+    public void setFirstPlayerScore(int firstPlayerScore) {
+        this.firstPlayerScore = firstPlayerScore;
+    }
+
+    public void setSecondPlayerScore(int secondPlayerScore) {
+        this.secondPlayerScore = secondPlayerScore;
+    }
+
+    public int getFirstPlayerScore() {
+        return firstPlayerScore;
+    }
+
+    public int getSecondPlayerScore() {
+        return secondPlayerScore;
     }
 
     @Override

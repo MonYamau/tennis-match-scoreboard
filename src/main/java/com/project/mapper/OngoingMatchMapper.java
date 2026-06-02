@@ -1,0 +1,58 @@
+package com.project.mapper;
+
+import com.project.domain.Point;
+import com.project.domain.game.DefaultGame;
+import com.project.domain.game.GameMode;
+import com.project.domain.game.TieBreakGame;
+import com.project.dto.request.OngoingMatchRequestDto;
+import com.project.dto.response.CurrentGameDto;
+import com.project.dto.response.OngoingMatchResponseDto;
+import com.project.model.OngoingMatch;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.factory.Mappers;
+
+@Mapper
+public interface OngoingMatchMapper {
+    OngoingMatchMapper INSTANCE = Mappers.getMapper(OngoingMatchMapper.class);
+
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "currentMatch", ignore = true)
+    OngoingMatch toModel(OngoingMatchRequestDto requestDto);
+
+    OngoingMatchResponseDto toDto(OngoingMatch match);
+
+    default CurrentGameDto mapGameModeToDto(GameMode gameMode) {
+        if (gameMode instanceof DefaultGame defaultGame) {
+            return new CurrentGameDto(
+                    "defaultGame",
+                    defaultGame.getFirstPlayerScore().name(),
+                    defaultGame.getSecondPlayerScore().name()
+            );
+        } else if (gameMode instanceof TieBreakGame tieBreakGame) {
+            return new CurrentGameDto(
+                    "tieBreakGame",
+                    String.valueOf(tieBreakGame.getFirstPlayerScore()),
+                    String.valueOf(tieBreakGame.getSecondPlayerScore())
+            );
+        }
+        throw new IllegalArgumentException();
+    }
+
+    OngoingMatch toModel(OngoingMatchResponseDto dto);
+
+    default GameMode mapDtoToGameMode(CurrentGameDto dto) {
+        if ("defaultGame".equals(dto.gameMode())) {
+            return new DefaultGame(
+                    Point.valueOf(dto.firstPlayerScore()),
+                    Point.valueOf(dto.secondPlayerScore())
+            );
+        } else if ("tieBreakGame".equals(dto.gameMode())) {
+            return new TieBreakGame(
+                    Integer.parseInt(dto.firstPlayerScore()),
+                    Integer.parseInt(dto.secondPlayerScore())
+            );
+        }
+        throw new IllegalArgumentException();
+    }
+}
