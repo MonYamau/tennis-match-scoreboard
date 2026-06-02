@@ -21,28 +21,28 @@ public class TennisSet {
         this.currentGame = new DefaultGame();
     }
 
-    public void setFirstPlayerScore(int firstPlayerScore) {
-        this.firstPlayerScore = firstPlayerScore;
-    }
-
-    public void setSecondPlayerScore(int secondPlayerScore) {
-        this.secondPlayerScore = secondPlayerScore;
-    }
-
-    public void setCurrentGame(GameMode currentGame) {
-        this.currentGame = currentGame;
-    }
-
     public int getFirstPlayerScore() {
         return firstPlayerScore;
+    }
+
+    public void setFirstPlayerScore(int firstPlayerScore) {
+        this.firstPlayerScore = firstPlayerScore;
     }
 
     public int getSecondPlayerScore() {
         return secondPlayerScore;
     }
 
+    public void setSecondPlayerScore(int secondPlayerScore) {
+        this.secondPlayerScore = secondPlayerScore;
+    }
+
     public GameMode getCurrentGame() {
         return currentGame;
+    }
+
+    public void setCurrentGame(GameMode currentGame) {
+        this.currentGame = currentGame;
     }
 
     public Optional<PlayerNumber> recalculateScoreFor(PlayerNumber player) {

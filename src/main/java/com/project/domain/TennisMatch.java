@@ -15,28 +15,28 @@ public class TennisMatch {
         this.currentSet = new TennisSet();
     }
 
-    public void setFirstPlayerScore(int firstPlayerScore) {
-        this.firstPlayerScore = firstPlayerScore;
-    }
-
-    public void setSecondPlayerScore(int secondPlayerScore) {
-        this.secondPlayerScore = secondPlayerScore;
-    }
-
-    public void setCurrentSet(TennisSet currentSet) {
-        this.currentSet = currentSet;
-    }
-
     public int getFirstPlayerScore() {
         return firstPlayerScore;
+    }
+
+    public void setFirstPlayerScore(int firstPlayerScore) {
+        this.firstPlayerScore = firstPlayerScore;
     }
 
     public int getSecondPlayerScore() {
         return secondPlayerScore;
     }
 
+    public void setSecondPlayerScore(int secondPlayerScore) {
+        this.secondPlayerScore = secondPlayerScore;
+    }
+
     public TennisSet getCurrentSet() {
         return currentSet;
+    }
+
+    public void setCurrentSet(TennisSet currentSet) {
+        this.currentSet = currentSet;
     }
 
     public Optional<PlayerNumber> recalculateScoreFor(PlayerNumber player) {

@@ -21,20 +21,20 @@ public class DefaultGame implements GameMode {
         this.secondPlayerScore = secondPlayerScore;
     }
 
-    public void setFirstPlayerScore(Point firstPlayerScore) {
-        this.firstPlayerScore = firstPlayerScore;
-    }
-
-    public void setSecondPlayerScore(Point secondPlayerScore) {
-        this.secondPlayerScore = secondPlayerScore;
-    }
-
     public Point getFirstPlayerScore() {
         return firstPlayerScore;
     }
 
+    public void setFirstPlayerScore(Point firstPlayerScore) {
+        this.firstPlayerScore = firstPlayerScore;
+    }
+
     public Point getSecondPlayerScore() {
         return secondPlayerScore;
+    }
+
+    public void setSecondPlayerScore(Point secondPlayerScore) {
+        this.secondPlayerScore = secondPlayerScore;
     }
 
     @Override
