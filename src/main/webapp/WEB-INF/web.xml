@@ -28,4 +28,13 @@
         <servlet-name>MatchCollectionServlet</servlet-name>
         <url-pattern>/matches</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>MatchScoreServlet</servlet-name>
+        <servlet-class>com.project.controller.MatchScoreServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>MatchScoreServlet</servlet-name>
+        <url-pattern>/match-score</url-pattern>
+    </servlet-mapping>
 </web-app>

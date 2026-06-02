@@ -6,6 +6,7 @@ import com.project.dao.HibernatePlayerDao;
 import com.project.dao.MatchDao;
 import com.project.dao.PlayerDao;
 import com.project.service.MatchRegistrationService;
+import com.project.service.MatchScoreService;
 import com.project.storage.MatchStorage;
 import com.project.storage.RedisMatchStorage;
 import jakarta.servlet.ServletContext;
@@ -30,9 +31,11 @@ public class AppContextListener implements ServletContextListener {
         MatchStorage matchStorage = new RedisMatchStorage(objectMapper, redisClient);
 
         MatchRegistrationService registrationService = new MatchRegistrationService(matchStorage, playerDao);
+        MatchScoreService scoreService = new MatchScoreService(matchStorage);
 
         ServletContext context = sce.getServletContext();
         context.setAttribute("RegistrationService", registrationService);
+        context.setAttribute("ScoreService", scoreService);
     }
 
     @Override
