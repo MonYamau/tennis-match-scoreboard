@@ -5,7 +5,7 @@
 </head>
 <body>
 <h1>Добро пожаловать!</h1>
-<a target="_blank" href="new-match">Создать новый матч</a>
-<a target="_blank" href="matches">Просмотреть завершённые матчи</a>
+<a href="new-match">Создать новый матч</a>
+<a href="matches">Просмотреть завершённые матчи</a>
 </body>
 </html>
