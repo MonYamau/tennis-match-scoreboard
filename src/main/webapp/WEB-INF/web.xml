@@ -7,6 +7,10 @@
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
 
+    <listener>
+        <listener-class>com.project.listener.AppContextListener</listener-class>
+    </listener>
+
     <servlet>
         <servlet-name>MatchRegistrationServlet</servlet-name>
         <servlet-class>com.project.controller.MatchRegistrationServlet</servlet-class>
