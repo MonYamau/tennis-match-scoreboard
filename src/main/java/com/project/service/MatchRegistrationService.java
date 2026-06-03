@@ -23,23 +23,25 @@ public class MatchRegistrationService {
     }
 
     public OngoingMatchResponseDto registerMatch(OngoingMatchRequestDto requestDto) {
-        String firstPlayer = savePlayer(requestDto.firstPlayerName());
-        String secondPlayer = savePlayer(requestDto.secondPlayerName());
-        OngoingMatch match = new OngoingMatch(UUID.randomUUID(), firstPlayer, secondPlayer, new TennisMatch());
+        Player firstPlayer = savePlayer(requestDto.firstPlayerName());
+        Player secondPlayer = savePlayer(requestDto.secondPlayerName());
+        OngoingMatch match = new OngoingMatch(
+                UUID.randomUUID(), firstPlayer.getId(), secondPlayer.getId(),
+                firstPlayer.getName(), secondPlayer.getName(), new TennisMatch());
         matchStorage.saveMatch(match);
         return mapper.toDto(match);
     }
 
-    private String savePlayer(String playerName) {
+    private Player savePlayer(String playerName) {
         Optional<Player> result = playerDao.findByName(playerName);
         if (result.isPresent()) {
-            return result.get().getName();
+            return result.get();
         }
 
         Optional<Player> newPlayer = playerDao.save(new Player(playerName));
         if (newPlayer.isEmpty()) {
             throw new RuntimeException();
         }
-        return playerName;
+        return newPlayer.get();
     }
 }

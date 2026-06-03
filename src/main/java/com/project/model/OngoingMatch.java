@@ -8,6 +8,8 @@ import java.util.UUID;
 public class OngoingMatch {
     @JsonIgnore
     private UUID id;
+    private int firstPlayerId;
+    private int secondPlayerId;
     private String firstPlayerName;
     private String secondPlayerName;
     private TennisMatch currentMatch;
@@ -15,8 +17,11 @@ public class OngoingMatch {
     public OngoingMatch() {
     }
 
-    public OngoingMatch(UUID id, String firstPlayerName, String secondPlayerName, TennisMatch currentMatch) {
+    public OngoingMatch(UUID id, int firstPlayerId, int secondPlayerId, String firstPlayerName,
+                        String secondPlayerName, TennisMatch currentMatch) {
         this.id = id;
+        this.firstPlayerId = firstPlayerId;
+        this.secondPlayerId = secondPlayerId;
         this.firstPlayerName = firstPlayerName;
         this.secondPlayerName = secondPlayerName;
         this.currentMatch = currentMatch;
@@ -52,5 +57,21 @@ public class OngoingMatch {
 
     public void setCurrentMatch(TennisMatch currentMatch) {
         this.currentMatch = currentMatch;
+    }
+
+    public int getFirstPlayerId() {
+        return firstPlayerId;
+    }
+
+    public void setFirstPlayerId(int firstPlayerId) {
+        this.firstPlayerId = firstPlayerId;
+    }
+
+    public int getSecondPlayerId() {
+        return secondPlayerId;
+    }
+
+    public void setSecondPlayerId(int secondPlayerId) {
+        this.secondPlayerId = secondPlayerId;
     }
 }

@@ -10,7 +10,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.UUID;
 
-public class MatchScoreServlet extends BaseServlet{
+public class MatchScoreServlet extends BaseServlet {
     private MatchScoreService matchScoreService;
 
     @Override
