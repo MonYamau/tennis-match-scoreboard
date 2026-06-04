@@ -2,7 +2,7 @@ package com.project.storage;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.project.dto.response.OngoingMatchResponseDto;
+import com.project.dto.response.OngoingMatchDto;
 import com.project.mapper.OngoingMatchMapper;
 import com.project.model.OngoingMatch;
 import redis.clients.jedis.RedisClient;
@@ -23,8 +23,8 @@ public class RedisMatchStorage implements MatchStorage {
     @Override
     public void saveMatch(OngoingMatch match) {
         try {
-            String key = String.valueOf(match.getId());
-            OngoingMatchResponseDto dto = mapper.toDto(match);
+            String key = String.valueOf(match.getUuid());
+            OngoingMatchDto dto = mapper.toDto(match);
             String json = objectMapper.writeValueAsString(dto);
             redisClient.set(key, json);
 
@@ -41,9 +41,9 @@ public class RedisMatchStorage implements MatchStorage {
             if (json == null || json.isBlank()) {
                 return Optional.empty();
             }
-            OngoingMatchResponseDto dto = objectMapper.readValue(json, OngoingMatchResponseDto.class);
+            OngoingMatchDto dto = objectMapper.readValue(json, OngoingMatchDto.class);
             OngoingMatch match = mapper.toModel(dto);
-            match.setId(uuid);
+            match.setUuid(uuid);
             return Optional.of(match);
 
         } catch (JsonProcessingException e) {

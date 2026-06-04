@@ -4,23 +4,19 @@ import com.project.domain.Point;
 import com.project.domain.game.DefaultGame;
 import com.project.domain.game.GameMode;
 import com.project.domain.game.TieBreakGame;
-import com.project.dto.request.OngoingMatchRequestDto;
 import com.project.dto.response.CurrentGameDto;
-import com.project.dto.response.OngoingMatchResponseDto;
+import com.project.dto.response.OngoingMatchDto;
 import com.project.model.OngoingMatch;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
 @Mapper
 public interface OngoingMatchMapper {
     OngoingMatchMapper INSTANCE = Mappers.getMapper(OngoingMatchMapper.class);
 
-    @Mapping(target = "id", ignore = true)
-    @Mapping(target = "currentMatch", ignore = true)
-    OngoingMatch toModel(OngoingMatchRequestDto requestDto);
+    OngoingMatchDto toDto(OngoingMatch match);
 
-    OngoingMatchResponseDto toDto(OngoingMatch match);
+    OngoingMatch toModel(OngoingMatchDto dto);
 
     default CurrentGameDto mapGameModeToDto(GameMode gameMode) {
         if (gameMode instanceof DefaultGame defaultGame) {
@@ -38,8 +34,6 @@ public interface OngoingMatchMapper {
         }
         throw new IllegalArgumentException();
     }
-
-    OngoingMatch toModel(OngoingMatchResponseDto dto);
 
     default GameMode mapDtoToGameMode(CurrentGameDto dto) {
         if ("defaultGame".equals(dto.gameMode())) {

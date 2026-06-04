@@ -1,7 +1,6 @@
 package com.project.controller;
 
-import com.project.dto.request.OngoingMatchRequestDto;
-import com.project.dto.response.OngoingMatchResponseDto;
+import com.project.dto.response.OngoingMatchDto;
 import com.project.service.MatchRegistrationService;
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
@@ -32,9 +31,7 @@ public class MatchRegistrationServlet extends BaseServlet {
         String firstPlayerName = getNormalizedName(req, "firstPlayer");
         String secondPlayerName = getNormalizedName(req, "secondPlayer");
 
-        OngoingMatchRequestDto requestDto = new OngoingMatchRequestDto(firstPlayerName, secondPlayerName);
-        OngoingMatchResponseDto responseDto = registrationService.registerMatch(requestDto);
-
-        resp.sendRedirect(req.getContextPath() + "/match-score?uuid=" + responseDto.id());
+        OngoingMatchDto responseDto = registrationService.registerMatch(firstPlayerName, secondPlayerName);
+        resp.sendRedirect(req.getContextPath() + "/match-score?uuid=" + responseDto.uuid());
     }
 }

@@ -2,8 +2,7 @@ package com.project.service;
 
 import com.project.dao.PlayerDao;
 import com.project.domain.TennisMatch;
-import com.project.dto.request.OngoingMatchRequestDto;
-import com.project.dto.response.OngoingMatchResponseDto;
+import com.project.dto.response.OngoingMatchDto;
 import com.project.mapper.OngoingMatchMapper;
 import com.project.model.OngoingMatch;
 import com.project.model.Player;
@@ -22,9 +21,9 @@ public class MatchRegistrationService {
         this.playerDao = playerDao;
     }
 
-    public OngoingMatchResponseDto registerMatch(OngoingMatchRequestDto requestDto) {
-        Player firstPlayer = savePlayer(requestDto.firstPlayerName());
-        Player secondPlayer = savePlayer(requestDto.secondPlayerName());
+    public OngoingMatchDto registerMatch(String firstPlayerName, String secondPlayerName) {
+        Player firstPlayer = savePlayer(firstPlayerName);
+        Player secondPlayer = savePlayer(secondPlayerName);
         OngoingMatch match = new OngoingMatch(
                 UUID.randomUUID(), firstPlayer.getId(), secondPlayer.getId(),
                 firstPlayer.getName(), secondPlayer.getName(), new TennisMatch());
