@@ -1,6 +1,6 @@
 package com.project.service;
 
-import com.project.dto.response.OngoingMatchResponseDto;
+import com.project.dto.response.OngoingMatchDto;
 import com.project.mapper.OngoingMatchMapper;
 import com.project.model.OngoingMatch;
 import com.project.storage.MatchStorage;
@@ -16,11 +16,19 @@ public class MatchScoreService {
         this.matchStorage = matchStorage;
     }
 
-    public OngoingMatchResponseDto getMatch(UUID uuid) {
+    public OngoingMatchDto getMatch(UUID uuid) {
         Optional<OngoingMatch> match = matchStorage.getMatch(uuid);
         if (match.isEmpty()) {
             throw new RuntimeException();
         }
         return mapper.toDto(match.get());
+    }
+
+    public OngoingMatchDto recalculateMatch(UUID uuid, int winnerId) {
+        OngoingMatchDto dto = getMatch(uuid);
+        OngoingMatch match = mapper.toModel(dto);
+        match.recalculateScoreForMatch(winnerId);
+        matchStorage.saveMatch(match);
+        return mapper.toDto(match);
     }
 }

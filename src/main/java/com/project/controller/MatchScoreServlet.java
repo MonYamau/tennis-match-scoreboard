@@ -1,6 +1,7 @@
 package com.project.controller;
 
-import com.project.dto.response.OngoingMatchResponseDto;
+import com.project.dto.response.OngoingMatchDto;
+import com.project.service.MatchCompletionService;
 import com.project.service.MatchScoreService;
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
@@ -12,17 +13,19 @@ import java.util.UUID;
 
 public class MatchScoreServlet extends BaseServlet {
     private MatchScoreService matchScoreService;
+    private MatchCompletionService matchCompletionService;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
         this.matchScoreService = (MatchScoreService) getServletContext().getAttribute("ScoreService");
+        this.matchCompletionService = (MatchCompletionService) getServletContext().getAttribute("CompletionService");
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         UUID uuid = UUID.fromString(req.getParameter("uuid"));
-        OngoingMatchResponseDto responseDto = matchScoreService.getMatch(uuid);
+        OngoingMatchDto responseDto = matchScoreService.getMatch(uuid);
         req.setAttribute("match", responseDto);
         req.setAttribute("uuid", uuid);
         req.getRequestDispatcher("/WEB-INF/match-score.jsp").forward(req, resp);
@@ -30,6 +33,13 @@ public class MatchScoreServlet extends BaseServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doPost(req, resp);
+        UUID uuid = UUID.fromString(req.getParameter("uuid"));
+        int winnerId = Integer.parseInt(req.getParameter("winnerId"));
+        OngoingMatchDto dto = matchScoreService.recalculateMatch(uuid, winnerId);
+        if (!(dto.winnerId() == null)) {
+            matchCompletionService.finishMatch(dto);
+            req.getRequestDispatcher("/WEB-INF/finished-match.jsp").forward(req, resp);
+        }
+        resp.sendRedirect(req.getContextPath() + "/match-score?uuid=" + dto.uuid());
     }
 }
