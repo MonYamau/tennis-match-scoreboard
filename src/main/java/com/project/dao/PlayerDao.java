@@ -7,6 +7,4 @@ import java.util.Optional;
 
 public interface PlayerDao extends BaseDao<Player> {
     Optional<Player> findByName(String name);
-
-    List<Player> findByPatternWithMatches(String pattern);
 }

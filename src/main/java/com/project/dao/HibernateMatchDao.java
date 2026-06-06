@@ -10,6 +10,25 @@ import java.util.Optional;
 
 //РЕАЛИЗОВАТЬ SERVLET ФИЛЬТР ДЛЯ ТРАНЗАКЦИЙ
 public class HibernateMatchDao implements Serializable, MatchDao {
+    private final static String FINDING_QUERY = """
+            SELECT m
+            FROM Match m
+            JOIN FETCH m.firstPlayer
+            JOIN FETCH m.secondPlayer
+            JOIN FETCH m.winner""";
+
+    private final static String COUNTING_QUERY = """
+            SELECT COUNT(m)
+            FROM Match m
+            JOIN FETCH m.firstPlayer
+            JOIN FETCH m.secondPlayer
+            JOIN FETCH m.winner""";
+
+    private final static String QUERY_PATTERN_FILTER = """
+            WHERE m.firstPlayer.name LIKE :pattern OR m.secondPlayer.name LIKE :pattern""";
+
+    private final static String SORTING_QUERY = """
+            LIMIT :limit ORDER BY m.id DESC""";
 
     private final SessionFactory sessionFactory;
 
@@ -18,12 +37,45 @@ public class HibernateMatchDao implements Serializable, MatchDao {
     }
 
     @Override
-    public List<Match> findAll() {
+    public List<Match> findPage(int index, int limit) {
+        List<Match> matches;
         Session session = sessionFactory.getCurrentSession();
-        session.beginTransaction();
-        List<Match> matches = session.createQuery("FROM Match", Match.class).getResultList();
-        session.getTransaction().commit();
+        matches = session.createQuery(FINDING_QUERY + SORTING_QUERY, Match.class)
+                .setFirstResult(index)
+                .setMaxResults(limit)
+                .getResultList();
         return matches;
+    }
+
+    @Override
+    public List<Match> findPageByFilters(String namePattern, int index, int limit) {
+        List<Match> matches;
+        Session session = sessionFactory.getCurrentSession();
+        matches = session.createQuery(FINDING_QUERY + QUERY_PATTERN_FILTER + SORTING_QUERY, Match.class)
+                .setParameter("pattern", namePattern)
+                .setFirstResult(index)
+                .setMaxResults(limit)
+                .getResultList();
+        return matches;
+    }
+
+    @Override
+    public long countAll() {
+        long counter;
+        Session session = sessionFactory.getCurrentSession();
+        counter = session.createQuery(COUNTING_QUERY, Long.class)
+                .getResultCount();
+        return counter;
+    }
+
+    @Override
+    public long countAllByFilter(String namePattern) {
+        long counter;
+        Session session = sessionFactory.getCurrentSession();
+        counter = session.createQuery(COUNTING_QUERY + QUERY_PATTERN_FILTER, Long.class)
+                .setParameter("pattern", namePattern)
+                .getResultCount();
+        return counter;
     }
 
     @Override

@@ -20,28 +20,9 @@ public class HibernatePlayerDao implements PlayerDao {
     @Override
     public Optional<Player> findByName(String name) {
         Session session = sessionFactory.getCurrentSession();
-        session.beginTransaction();
-        Optional<Player> player = session.createQuery("FROM Player WHERE name = :name", Player.class)
+        return session.createQuery("FROM Player WHERE name = :name", Player.class)
                 .setParameter("name", name)
                 .uniqueResultOptional();
-        session.getTransaction().commit();
-        return player;
-    }
-
-    @Override
-    public List<Player> findByPatternWithMatches(String pattern) {
-        Session session = sessionFactory.getCurrentSession();
-        session.beginTransaction();
-        pattern = pattern + "%";
-        List<Player> players = session.createQuery("FROM Player WHERE name LIKE :pattern", Player.class)
-                .setParameter("pattern", pattern)
-                .getResultList();
-        for (Player player : players) {
-            Hibernate.initialize(player.getMatchesByFirstPlayer());
-            Hibernate.initialize(player.getMatchesBySecondPlayer());
-        }
-        session.getTransaction().commit();
-        return players;
     }
 
     @Override
