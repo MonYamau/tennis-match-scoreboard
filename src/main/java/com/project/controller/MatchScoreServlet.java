@@ -38,6 +38,7 @@ public class MatchScoreServlet extends BaseServlet {
         OngoingMatchDto dto = matchScoreService.recalculateMatch(uuid, winnerId);
         if (!(dto.winnerId() == null)) {
             matchCompletionService.finishMatch(dto);
+            req.setAttribute("match", dto);
             req.getRequestDispatcher("/WEB-INF/finished-match.jsp").forward(req, resp);
         }
         resp.sendRedirect(req.getContextPath() + "/match-score?uuid=" + dto.uuid());
