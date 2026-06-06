@@ -73,12 +73,4 @@ public class Player {
     public void setMatchesBySecondPlayer(List<Match> matchesBySecondPlayer) {
         this.matchesBySecondPlayer = matchesBySecondPlayer;
     }
-
-    @Override
-    public String toString() {
-        return "Player{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                '}';
-    }
 }
