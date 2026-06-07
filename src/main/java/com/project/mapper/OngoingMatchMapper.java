@@ -32,7 +32,7 @@ public interface OngoingMatchMapper {
                     String.valueOf(tieBreakGame.getSecondPlayerScore())
             );
         }
-        throw new IllegalArgumentException();
+        throw new IllegalArgumentException("Failed to convert GameMode to record");
     }
 
     default GameMode mapDtoToGameMode(CurrentGameDto dto) {
@@ -47,6 +47,6 @@ public interface OngoingMatchMapper {
                     Integer.parseInt(dto.secondPlayerScore())
             );
         }
-        throw new IllegalArgumentException();
+        throw new IllegalArgumentException("Failed to convert record to GameMode");
     }
 }
