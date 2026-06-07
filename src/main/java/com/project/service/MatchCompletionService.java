@@ -21,7 +21,7 @@ public class MatchCompletionService {
     }
 
     public void finishMatch(OngoingMatchDto matchDto) {
-        matchStorage.deleteMatch(matchDto.uuid());
+        matchStorage.delete(matchDto.uuid());
         Optional<Player> firstPlayer = playerDao.findByName(matchDto.firstPlayerName());
         Optional<Player> secondPlayer = playerDao.findByName(matchDto.secondPlayerName());
         if (firstPlayer.isEmpty() || secondPlayer.isEmpty()) {

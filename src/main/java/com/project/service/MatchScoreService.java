@@ -17,7 +17,7 @@ public class MatchScoreService {
     }
 
     public OngoingMatchDto getMatch(UUID uuid) {
-        Optional<OngoingMatch> match = matchStorage.getMatch(uuid);
+        Optional<OngoingMatch> match = matchStorage.find(uuid);
         if (match.isEmpty()) {
             throw new RuntimeException();
         }
@@ -28,7 +28,7 @@ public class MatchScoreService {
         OngoingMatchDto dto = getMatch(uuid);
         OngoingMatch match = mapper.toModel(dto);
         match.recalculateScoreForMatch(winnerId);
-        matchStorage.saveMatch(match);
+        matchStorage.save(match);
         return mapper.toDto(match);
     }
 }

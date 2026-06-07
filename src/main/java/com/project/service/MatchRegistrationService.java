@@ -27,7 +27,7 @@ public class MatchRegistrationService {
         OngoingMatch match = new OngoingMatch(
                 UUID.randomUUID(), firstPlayer.getId(), secondPlayer.getId(),
                 firstPlayer.getName(), secondPlayer.getName(), new TennisMatch());
-        matchStorage.saveMatch(match);
+        matchStorage.save(match);
         return mapper.toDto(match);
     }
 
