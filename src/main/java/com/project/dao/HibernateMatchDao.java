@@ -8,7 +8,6 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Optional;
 
-//РЕАЛИЗОВАТЬ SERVLET ФИЛЬТР ДЛЯ ТРАНЗАКЦИЙ
 public class HibernateMatchDao implements Serializable, MatchDao {
     private final static String FINDING_QUERY = """
             SELECT m

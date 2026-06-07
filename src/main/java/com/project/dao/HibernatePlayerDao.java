@@ -6,8 +6,10 @@ import org.hibernate.SessionFactory;
 
 import java.util.Optional;
 
-//РЕАЛИЗОВАТЬ SERVLET ФИЛЬТР ДЛЯ ТРАНЗАКЦИЙ
 public class HibernatePlayerDao implements PlayerDao {
+    private final static String FINDING_QUERY = """
+    FROM Player WHERE name = :name
+    """;
 
     private final SessionFactory sessionFactory;
 
@@ -20,7 +22,7 @@ public class HibernatePlayerDao implements PlayerDao {
         Optional<Player> player;
         Session session = sessionFactory.getCurrentSession();
         session.beginTransaction();
-        player = session.createQuery("FROM Player WHERE name = :name", Player.class)
+        player = session.createQuery(FINDING_QUERY, Player.class)
                 .setParameter("name", name)
                 .uniqueResultOptional();
         session.getTransaction().commit();
