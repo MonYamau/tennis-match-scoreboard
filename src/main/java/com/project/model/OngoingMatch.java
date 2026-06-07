@@ -86,7 +86,7 @@ public class OngoingMatch {
         this.currentMatch = currentMatch;
     }
 
-    public void recalculateScoreForMatch (int playerId) {
+    public void recalculateScoreForMatch(int playerId) {
         if (playerId == firstPlayerId) {
             Optional<PlayerNumber> player = currentMatch.recalculateScoreFor(PlayerNumber.FIRST_PLAYER);
             if (player.isPresent()) {

@@ -8,8 +8,8 @@ import java.util.Optional;
 
 public class HibernatePlayerDao implements PlayerDao {
     private final static String FINDING_QUERY = """
-    FROM Player WHERE name = :name
-    """;
+            FROM Player WHERE name = :name
+            """;
 
     private final SessionFactory sessionFactory;
 

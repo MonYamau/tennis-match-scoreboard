@@ -2,7 +2,6 @@ package com.project.dao;
 
 import com.project.model.Player;
 
-import java.util.List;
 import java.util.Optional;
 
 public interface PlayerDao extends BaseDao<Player> {
