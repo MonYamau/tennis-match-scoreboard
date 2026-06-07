@@ -1,6 +1,7 @@
 package com.project.controller;
 
 import com.project.dto.response.OngoingMatchDto;
+import com.project.exception.ServletContextService;
 import com.project.service.MatchRegistrationService;
 import com.project.util.JspPages;
 import jakarta.servlet.ServletConfig;
@@ -18,7 +19,7 @@ public class MatchRegistrationServlet extends BaseServlet {
         super.init(config);
         this.registrationService = (MatchRegistrationService) getServletContext().getAttribute("RegistrationService");
         if (registrationService == null) {
-            throw new RuntimeException("Couldn't find the registration service");
+            throw new ServletContextService("Couldn't find the registration service");
         }
     }
 

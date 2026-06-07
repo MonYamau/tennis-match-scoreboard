@@ -1,6 +1,7 @@
 package com.project.controller;
 
 import com.project.dto.response.OngoingMatchDto;
+import com.project.exception.ServletContextService;
 import com.project.service.MatchCompletionService;
 import com.project.service.MatchScoreService;
 import com.project.util.JspPages;
@@ -21,13 +22,19 @@ public class MatchScoreServlet extends BaseServlet {
         super.init(config);
         this.matchScoreService = (MatchScoreService) getServletContext().getAttribute("ScoreService");
         this.matchCompletionService = (MatchCompletionService) getServletContext().getAttribute("CompletionService");
+        if (matchScoreService == null) {
+            throw new ServletContextService("Couldn't find the score service");
+        }
+        if (matchCompletionService == null) {
+            throw new ServletContextService("Couldn't find the completion service");
+        }
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         UUID uuid = UUID.fromString(req.getParameter("uuid"));
-        OngoingMatchDto responseDto = matchScoreService.getMatch(uuid);
-        req.setAttribute("match", responseDto);
+        OngoingMatchDto dto = matchScoreService.getMatch(uuid);
+        req.setAttribute("match", dto);
         req.setAttribute("uuid", uuid);
         req.getRequestDispatcher(JspPages.MATCH_SCORE).forward(req, resp);
     }
@@ -37,11 +44,11 @@ public class MatchScoreServlet extends BaseServlet {
         UUID uuid = UUID.fromString(req.getParameter("uuid"));
         int winnerId = Integer.parseInt(req.getParameter("winnerId"));
         OngoingMatchDto dto = matchScoreService.recalculateMatch(uuid, winnerId);
-        if (!(dto.winnerId() == null)) {
-            matchCompletionService.finishMatch(dto);
-            req.setAttribute("match", dto);
-            req.getRequestDispatcher(JspPages.FINISHED_MATCH).forward(req, resp);
+        if (dto.winnerId() == null) {
+            resp.sendRedirect(req.getContextPath() + "/match-score?uuid=" + dto.uuid());
         }
-        resp.sendRedirect(req.getContextPath() + "/match-score?uuid=" + dto.uuid());
+        matchCompletionService.finishMatch(dto);
+        req.setAttribute("match", dto);
+        req.getRequestDispatcher(JspPages.FINISHED_MATCH).forward(req, resp);
     }
 }
