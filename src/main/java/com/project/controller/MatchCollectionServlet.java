@@ -2,6 +2,7 @@ package com.project.controller;
 
 import com.project.dto.MatchPageDto;
 import com.project.service.MatchCollectionService;
+import com.project.util.JspPages;
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -24,6 +25,6 @@ public class MatchCollectionServlet extends BaseServlet {
         String namePattern = req.getParameter("filter_by_player_name");
         MatchPageDto dto = matchCollectionService.findMatchesByFilters(page, namePattern);
         req.setAttribute("matchPage", dto);
-        req.getRequestDispatcher("WEB-INF/matches.jsp").forward(req, resp);
+        req.getRequestDispatcher(JspPages.MATCHES).forward(req, resp);
     }
 }

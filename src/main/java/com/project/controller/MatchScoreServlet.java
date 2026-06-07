@@ -3,6 +3,7 @@ package com.project.controller;
 import com.project.dto.response.OngoingMatchDto;
 import com.project.service.MatchCompletionService;
 import com.project.service.MatchScoreService;
+import com.project.util.JspPages;
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -28,7 +29,7 @@ public class MatchScoreServlet extends BaseServlet {
         OngoingMatchDto responseDto = matchScoreService.getMatch(uuid);
         req.setAttribute("match", responseDto);
         req.setAttribute("uuid", uuid);
-        req.getRequestDispatcher("/WEB-INF/match-score.jsp").forward(req, resp);
+        req.getRequestDispatcher(JspPages.MATCH_SCORE).forward(req, resp);
     }
 
     @Override
@@ -39,7 +40,7 @@ public class MatchScoreServlet extends BaseServlet {
         if (!(dto.winnerId() == null)) {
             matchCompletionService.finishMatch(dto);
             req.setAttribute("match", dto);
-            req.getRequestDispatcher("/WEB-INF/finished-match.jsp").forward(req, resp);
+            req.getRequestDispatcher(JspPages.FINISHED_MATCH).forward(req, resp);
         }
         resp.sendRedirect(req.getContextPath() + "/match-score?uuid=" + dto.uuid());
     }

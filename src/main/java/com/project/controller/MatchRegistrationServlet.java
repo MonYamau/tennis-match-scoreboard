@@ -2,6 +2,7 @@ package com.project.controller;
 
 import com.project.dto.response.OngoingMatchDto;
 import com.project.service.MatchRegistrationService;
+import com.project.util.JspPages;
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -23,7 +24,7 @@ public class MatchRegistrationServlet extends BaseServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("/WEB-INF/new-match.jsp").forward(req, resp);
+        req.getRequestDispatcher(JspPages.NEW_MATCH).forward(req, resp);
     }
 
     @Override
