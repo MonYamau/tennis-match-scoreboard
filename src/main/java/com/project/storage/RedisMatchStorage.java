@@ -21,7 +21,7 @@ public class RedisMatchStorage implements MatchStorage {
     }
 
     @Override
-    public void saveMatch(OngoingMatch match) {
+    public void save(OngoingMatch match) {
         try {
             String key = String.valueOf(match.getUuid());
             OngoingMatchDto dto = mapper.toDto(match);
@@ -34,7 +34,7 @@ public class RedisMatchStorage implements MatchStorage {
     }
 
     @Override
-    public Optional<OngoingMatch> getMatch(UUID uuid) {
+    public Optional<OngoingMatch> find(UUID uuid) {
         try {
             String key = String.valueOf(uuid);
             String json = redisClient.get(key);
@@ -52,7 +52,7 @@ public class RedisMatchStorage implements MatchStorage {
     }
 
     @Override
-    public void deleteMatch(UUID uuid) {
+    public void delete(UUID uuid) {
         try {
             String key = String.valueOf(uuid);
             redisClient.del(key);
