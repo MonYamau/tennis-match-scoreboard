@@ -36,12 +36,6 @@ public class Player {
         this.matchesBySecondPlayer = matchesBySecondPlayer;
     }
 
-    public List<Match> getAllMatches() {
-        return Stream.concat(matchesByFirstPlayer.stream(), matchesBySecondPlayer.stream())
-                .collect(Collectors.toList());
-    }
-
-
     public int getId() {
         return id;
     }
