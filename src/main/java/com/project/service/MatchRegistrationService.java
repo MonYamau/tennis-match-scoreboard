@@ -2,7 +2,7 @@ package com.project.service;
 
 import com.project.dao.PlayerDao;
 import com.project.domain.TennisMatch;
-import com.project.dto.response.OngoingMatchDto;
+import com.project.dto.domain.OngoingMatchDto;
 import com.project.mapper.OngoingMatchMapper;
 import com.project.model.OngoingMatch;
 import com.project.model.Player;

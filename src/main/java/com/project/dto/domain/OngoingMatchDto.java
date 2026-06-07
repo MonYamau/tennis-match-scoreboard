@@ -1,4 +1,4 @@
-package com.project.dto.response;
+package com.project.dto.domain;
 
 import java.util.UUID;
 

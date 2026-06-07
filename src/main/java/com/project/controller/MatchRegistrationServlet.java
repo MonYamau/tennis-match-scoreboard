@@ -1,6 +1,6 @@
 package com.project.controller;
 
-import com.project.dto.response.OngoingMatchDto;
+import com.project.dto.domain.OngoingMatchDto;
 import com.project.exception.ServletContextService;
 import com.project.service.MatchRegistrationService;
 import com.project.util.JspPages;

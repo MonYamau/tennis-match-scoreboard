@@ -2,7 +2,7 @@ package com.project.storage;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.project.dto.response.OngoingMatchDto;
+import com.project.dto.domain.OngoingMatchDto;
 import com.project.mapper.OngoingMatchMapper;
 import com.project.model.OngoingMatch;
 import redis.clients.jedis.RedisClient;

@@ -1,6 +1,6 @@
 package com.project.service;
 
-import com.project.dto.response.OngoingMatchDto;
+import com.project.dto.domain.OngoingMatchDto;
 import com.project.mapper.OngoingMatchMapper;
 import com.project.model.OngoingMatch;
 import com.project.storage.MatchStorage;
