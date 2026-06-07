@@ -19,6 +19,8 @@ import org.hibernate.cfg.Configuration;
 import redis.clients.jedis.RedisClient;
 
 public class AppContextListener implements ServletContextListener {
+    private final static String HOST = "localhost";
+    private final static int PORT = 6379;
     private SessionFactory sessionFactory;
     private RedisClient redisClient;
 
@@ -26,7 +28,7 @@ public class AppContextListener implements ServletContextListener {
     public void contextInitialized(ServletContextEvent sce) {
         ObjectMapper objectMapper = new ObjectMapper();
         sessionFactory = new Configuration().configure().buildSessionFactory();
-        redisClient = RedisClient.builder().hostAndPort("localhost", 6379).build();
+        redisClient = RedisClient.builder().hostAndPort(HOST, PORT).build();
 
         PlayerDao playerDao = new HibernatePlayerDao(sessionFactory);
         MatchDao matchDao = new HibernateMatchDao(sessionFactory);
