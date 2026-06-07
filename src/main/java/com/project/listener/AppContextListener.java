@@ -5,6 +5,7 @@ import com.project.dao.HibernateMatchDao;
 import com.project.dao.HibernatePlayerDao;
 import com.project.dao.MatchDao;
 import com.project.dao.PlayerDao;
+import com.project.service.MatchCollectionService;
 import com.project.service.MatchCompletionService;
 import com.project.service.MatchRegistrationService;
 import com.project.service.MatchScoreService;
@@ -34,11 +35,13 @@ public class AppContextListener implements ServletContextListener {
         MatchRegistrationService registrationService = new MatchRegistrationService(matchStorage, playerDao);
         MatchScoreService scoreService = new MatchScoreService(matchStorage);
         MatchCompletionService completionService = new MatchCompletionService(matchDao, playerDao, matchStorage);
+        MatchCollectionService collectionService = new MatchCollectionService(matchDao);
 
         ServletContext context = sce.getServletContext();
         context.setAttribute("RegistrationService", registrationService);
         context.setAttribute("ScoreService", scoreService);
         context.setAttribute("CompletionService", completionService);
+        context.setAttribute("CollectionService", collectionService);
     }
 
     @Override
