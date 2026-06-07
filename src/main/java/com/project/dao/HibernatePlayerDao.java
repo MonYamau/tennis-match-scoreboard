@@ -1,11 +1,9 @@
 package com.project.dao;
 
 import com.project.model.Player;
-import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
-import java.util.List;
 import java.util.Optional;
 
 //РЕАЛИЗОВАТЬ SERVLET ФИЛЬТР ДЛЯ ТРАНЗАКЦИЙ
@@ -19,10 +17,14 @@ public class HibernatePlayerDao implements PlayerDao {
 
     @Override
     public Optional<Player> findByName(String name) {
+        Optional<Player> player;
         Session session = sessionFactory.getCurrentSession();
-        return session.createQuery("FROM Player WHERE name = :name", Player.class)
+        session.beginTransaction();
+        player = session.createQuery("FROM Player WHERE name = :name", Player.class)
                 .setParameter("name", name)
                 .uniqueResultOptional();
+        session.getTransaction().commit();
+        return player;
     }
 
     @Override
