@@ -1,8 +1,8 @@
 package com.project.storage;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.project.dto.domain.OngoingMatchDto;
+import com.project.exception.StorageException;
 import com.project.mapper.OngoingMatchMapper;
 import com.project.model.OngoingMatch;
 import redis.clients.jedis.RedisClient;
@@ -28,8 +28,8 @@ public class RedisMatchStorage implements MatchStorage {
             String json = objectMapper.writeValueAsString(dto);
             redisClient.set(key, json);
 
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
+        } catch (Exception e) {
+            throw new StorageException("Failed to save match to the storage\n" + e.getMessage());
         }
     }
 
@@ -46,8 +46,8 @@ public class RedisMatchStorage implements MatchStorage {
             match.setUuid(uuid);
             return Optional.of(match);
 
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
+        } catch (Exception e) {
+            throw new StorageException("Failed to find match from the storage\n" + e.getMessage());
         }
     }
 
@@ -56,8 +56,9 @@ public class RedisMatchStorage implements MatchStorage {
         try {
             String key = String.valueOf(uuid);
             redisClient.del(key);
+
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new StorageException("Failed to delete match from the storage\n" + e.getMessage());
         }
     }
 }
