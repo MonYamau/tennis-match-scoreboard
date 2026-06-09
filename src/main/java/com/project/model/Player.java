@@ -3,8 +3,6 @@ package com.project.model;
 import jakarta.persistence.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Entity
 @Table(name = "Players")
