@@ -1,5 +1,6 @@
 package com.project.dao;
 
+import com.project.exception.DatabaseException;
 import com.project.model.Match;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -36,61 +37,92 @@ public class HibernateMatchDao implements Serializable, MatchDao {
 
     @Override
     public List<Match> findPage(int index, int limit) {
-        List<Match> matches;
         Session session = sessionFactory.getCurrentSession();
-        session.beginTransaction();
-        matches = session.createQuery(FINDING_QUERY + SORTING_QUERY, Match.class)
-                .setFirstResult(index)
-                .setMaxResults(limit)
-                .getResultList();
-        session.getTransaction().commit();
-        return matches;
+        try {
+
+            session.beginTransaction();
+            List<Match> matches = session.createQuery(FINDING_QUERY + SORTING_QUERY, Match.class)
+                    .setFirstResult(index)
+                    .setMaxResults(limit)
+                    .getResultList();
+            session.getTransaction().commit();
+            return matches;
+
+        } catch (Exception e) {
+            session.getTransaction().rollback();
+            throw new DatabaseException("Failed to find page from the database\n" + e.getMessage());
+        }
     }
 
     @Override
     public List<Match> findPageByFilters(String namePattern, int index, int limit) {
-        List<Match> matches;
         Session session = sessionFactory.getCurrentSession();
-        session.beginTransaction();
-        matches = session.createQuery(FINDING_QUERY + QUERY_PATTERN_FILTER + SORTING_QUERY, Match.class)
-                .setParameter("pattern", namePattern + "%")
-                .setFirstResult(index)
-                .setMaxResults(limit)
-                .getResultList();
-        session.getTransaction().commit();
-        return matches;
+        try {
+
+            session.beginTransaction();
+            List<Match> matches = session.createQuery(FINDING_QUERY + QUERY_PATTERN_FILTER + SORTING_QUERY, Match.class)
+                    .setParameter("pattern", namePattern + "%")
+                    .setFirstResult(index)
+                    .setMaxResults(limit)
+                    .getResultList();
+            session.getTransaction().commit();
+            return matches;
+
+        } catch (Exception e) {
+            session.getTransaction().rollback();
+            throw new DatabaseException("Failed to find page with filters from the database\n" + e.getMessage());
+        }
     }
 
     @Override
     public long countAll() {
-        long counter;
         Session session = sessionFactory.getCurrentSession();
-        session.beginTransaction();
-        counter = session.createQuery(COUNTING_QUERY, Long.class)
-                .getSingleResult();
-        session.getTransaction().commit();
-        return counter;
+        try {
+
+            session.beginTransaction();
+            long counter = session.createQuery(COUNTING_QUERY, Long.class)
+                    .getSingleResult();
+            session.getTransaction().commit();
+            return counter;
+
+        } catch (Exception e) {
+            session.getTransaction().rollback();
+            throw new DatabaseException("Failed to count entities from the database\n" + e.getMessage());
+        }
     }
 
     @Override
     public long countAllByFilter(String namePattern) {
-        long counter;
         Session session = sessionFactory.getCurrentSession();
-        session.beginTransaction();
-        counter = session.createQuery(COUNTING_QUERY + QUERY_PATTERN_FILTER, Long.class)
-                .setParameter("pattern", namePattern + "%")
-                .getSingleResult();
-        session.getTransaction().commit();
-        return counter;
+        try {
+
+            session.beginTransaction();
+            long counter = session.createQuery(COUNTING_QUERY + QUERY_PATTERN_FILTER, Long.class)
+                    .setParameter("pattern", namePattern + "%")
+                    .getSingleResult();
+            session.getTransaction().commit();
+            return counter;
+
+        } catch (Exception e) {
+            session.getTransaction().rollback();
+            throw new DatabaseException("Failed to count entities from the database with filters\n" + e.getMessage());
+        }
     }
 
     @Override
     public Optional<Match> save(Match match) {
         Session session = sessionFactory.getCurrentSession();
-        session.beginTransaction();
-        Integer id = (Integer) session.save(match);
-        match = session.get(Match.class, id);
-        session.getTransaction().commit();
-        return Optional.of(match);
+        try {
+
+            session.beginTransaction();
+            Integer id = (Integer) session.save(match);
+            match = session.get(Match.class, id);
+            session.getTransaction().commit();
+            return Optional.of(match);
+
+        } catch (Exception e) {
+            session.getTransaction().rollback();
+            throw new DatabaseException("Failed to save match to the database\n" + e.getMessage());
+        }
     }
 }
