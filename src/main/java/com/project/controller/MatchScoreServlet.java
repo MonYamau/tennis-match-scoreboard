@@ -1,7 +1,7 @@
 package com.project.controller;
 
 import com.project.dto.domain.OngoingMatchDto;
-import com.project.exception.ServletContextService;
+import com.project.exception.ServletContextException;
 import com.project.service.MatchCompletionService;
 import com.project.service.MatchScoreService;
 import com.project.util.JspPages;
@@ -23,10 +23,10 @@ public class MatchScoreServlet extends BaseServlet {
         this.matchScoreService = (MatchScoreService) getServletContext().getAttribute("ScoreService");
         this.matchCompletionService = (MatchCompletionService) getServletContext().getAttribute("CompletionService");
         if (matchScoreService == null) {
-            throw new ServletContextService("Couldn't find the score service");
+            throw new ServletContextException("Couldn't find the score service");
         }
         if (matchCompletionService == null) {
-            throw new ServletContextService("Couldn't find the completion service");
+            throw new ServletContextException("Couldn't find the completion service");
         }
     }
 

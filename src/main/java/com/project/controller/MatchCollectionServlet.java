@@ -1,7 +1,7 @@
 package com.project.controller;
 
 import com.project.dto.MatchPageDto;
-import com.project.exception.ServletContextService;
+import com.project.exception.ServletContextException;
 import com.project.service.MatchCollectionService;
 import com.project.util.JspPages;
 import jakarta.servlet.ServletConfig;
@@ -19,7 +19,7 @@ public class MatchCollectionServlet extends BaseServlet {
         super.init(config);
         this.matchCollectionService = (MatchCollectionService) getServletContext().getAttribute("CollectionService");
         if (matchCollectionService == null) {
-            throw new ServletContextService("Couldn't find the collection service");
+            throw new ServletContextException("Couldn't find the collection service");
         }
     }
 
