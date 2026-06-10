@@ -1,6 +1,7 @@
 package com.project.controller;
 
 import com.project.exception.IncorrectInputException;
+import com.project.util.ValidationUtil;
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
@@ -16,9 +17,7 @@ public class BaseServlet extends HttpServlet {
 
     protected String getNormalizedName(HttpServletRequest req, String parameter) {
         String name = req.getParameter(parameter);
-        if (name.isBlank()) {
-            throw new IncorrectInputException("The expected parameter is empty");
-        }
+        ValidationUtil.validateName(name);
         return name.strip();
     }
 
@@ -28,7 +27,7 @@ public class BaseServlet extends HttpServlet {
             return DEFAULT_PAGE;
         }
         int page = convertNumber(pageParam);
-        validateNaturalNumber(page);
+        ValidationUtil.validatePage(page, DEFAULT_PAGE);
         return page;
     }
 
@@ -36,12 +35,6 @@ public class BaseServlet extends HttpServlet {
         try {
             return Integer.parseInt(parameter);
         } catch (NumberFormatException e) {
-            throw new IncorrectInputException("Incorrect number format (a natural number is expected)");
-        }
-    }
-
-    private void validateNaturalNumber(int page) {
-        if (page < DEFAULT_PAGE) {
             throw new IncorrectInputException("Incorrect number format (a natural number is expected)");
         }
     }

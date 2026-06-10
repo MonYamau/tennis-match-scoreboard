@@ -4,6 +4,7 @@ import com.project.dto.domain.OngoingMatchDto;
 import com.project.exception.ServletContextException;
 import com.project.service.MatchRegistrationService;
 import com.project.util.JspPages;
+import com.project.util.ValidationUtil;
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -32,6 +33,7 @@ public class MatchRegistrationServlet extends BaseServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String firstPlayerName = getNormalizedName(req, "firstPlayer");
         String secondPlayerName = getNormalizedName(req, "secondPlayer");
+        ValidationUtil.validateNamesForUnique(firstPlayerName, secondPlayerName);
 
         OngoingMatchDto responseDto = registrationService.registerMatch(firstPlayerName, secondPlayerName);
         resp.sendRedirect(req.getContextPath() + "/match-score?uuid=" + responseDto.uuid());
