@@ -36,10 +36,9 @@ public class MatchRegistrationService {
         if (result.isPresent()) {
             return result.get();
         }
-
         Optional<Player> newPlayer = playerDao.save(new Player(playerName));
         if (newPlayer.isEmpty()) {
-            throw new RuntimeException();
+            throw new IllegalStateException("Couldn't find the player to register");
         }
         return newPlayer.get();
     }

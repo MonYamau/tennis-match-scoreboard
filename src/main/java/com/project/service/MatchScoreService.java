@@ -1,6 +1,7 @@
 package com.project.service;
 
 import com.project.dto.domain.OngoingMatchDto;
+import com.project.exception.DataNotFoundException;
 import com.project.mapper.OngoingMatchMapper;
 import com.project.model.OngoingMatch;
 import com.project.storage.MatchStorage;
@@ -19,7 +20,7 @@ public class MatchScoreService {
     public OngoingMatchDto getMatch(UUID uuid) {
         Optional<OngoingMatch> match = matchStorage.find(uuid);
         if (match.isEmpty()) {
-            throw new RuntimeException();
+            throw new DataNotFoundException("Couldn't find the current match");
         }
         return mapper.toDto(match.get());
     }

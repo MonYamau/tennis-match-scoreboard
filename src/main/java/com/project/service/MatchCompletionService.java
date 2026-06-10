@@ -25,13 +25,13 @@ public class MatchCompletionService {
         Optional<Player> firstPlayer = playerDao.findByName(matchDto.firstPlayerName());
         Optional<Player> secondPlayer = playerDao.findByName(matchDto.secondPlayerName());
         if (firstPlayer.isEmpty() || secondPlayer.isEmpty()) {
-            throw new RuntimeException();
+            throw new IllegalStateException("Couldn't find the player to save");
         }
         Player winner = checkWinner(matchDto.winnerId(), firstPlayer.get(), secondPlayer.get());
         Match finishedMatch = new Match(firstPlayer.get(), secondPlayer.get(), winner);
         Optional<Match> result = matchDao.save(finishedMatch);
         if (result.isEmpty()) {
-            throw new RuntimeException();
+            throw new IllegalStateException("Couldn't find the finished match");
         }
     }
 
@@ -39,6 +39,9 @@ public class MatchCompletionService {
         if (winnerId == firstPlayer.getId()) {
             return firstPlayer;
         }
-        return secondPlayer;
+        if (winnerId == secondPlayer.getId()) {
+            return secondPlayer;
+        }
+        throw new IllegalStateException("Couldn't determine the winner");
     }
 }
