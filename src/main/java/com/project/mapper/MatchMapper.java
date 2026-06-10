@@ -1,6 +1,6 @@
 package com.project.mapper;
 
-import com.project.dto.MatchDto;
+import com.project.dto.response.MatchDto;
 import com.project.model.Match;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

@@ -1,6 +1,7 @@
 package com.project.controller;
 
-import com.project.dto.domain.OngoingMatchDto;
+import com.project.dto.request.OngoingMatchRequestDto;
+import com.project.dto.response.OngoingMatchDto;
 import com.project.exception.ServletContextException;
 import com.project.service.MatchCompletionService;
 import com.project.service.MatchScoreService;
@@ -32,18 +33,17 @@ public class MatchScoreServlet extends BaseServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        UUID uuid = UUID.fromString(req.getParameter("uuid"));
-        OngoingMatchDto dto = matchScoreService.getMatch(uuid);
+        OngoingMatchRequestDto requestDto = getRequestDtoForGetMethod(req);
+        OngoingMatchDto dto = matchScoreService.getMatch(requestDto);
         req.setAttribute("match", dto);
-        req.setAttribute("uuid", uuid);
+        req.setAttribute("uuid", dto.uuid());
         req.getRequestDispatcher(JspPages.MATCH_SCORE).forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        UUID uuid = UUID.fromString(req.getParameter("uuid"));
-        int winnerId = Integer.parseInt(req.getParameter("winnerId"));
-        OngoingMatchDto dto = matchScoreService.recalculateMatch(uuid, winnerId);
+        OngoingMatchRequestDto requestDto = getRequestDtoForPostMethod(req);
+        OngoingMatchDto dto = matchScoreService.recalculateMatch(requestDto);
         if (dto.winnerId() == null) {
             resp.sendRedirect(req.getContextPath() + "/match-score?uuid=" + dto.uuid());
             return;
@@ -51,5 +51,16 @@ public class MatchScoreServlet extends BaseServlet {
         matchCompletionService.finishMatch(dto);
         req.setAttribute("match", dto);
         req.getRequestDispatcher(JspPages.FINISHED_MATCH).forward(req, resp);
+    }
+
+    private OngoingMatchRequestDto getRequestDtoForGetMethod(HttpServletRequest req) {
+        UUID uuid = getNormalizedUuid(req, "uuid");
+        return new OngoingMatchRequestDto(uuid, null);
+    }
+
+    private OngoingMatchRequestDto getRequestDtoForPostMethod(HttpServletRequest req) {
+        UUID uuid = getNormalizedUuid(req, "uuid");
+        Integer winnerId = Integer.parseInt(req.getParameter("winnerId"));
+        return new OngoingMatchRequestDto(uuid, winnerId);
     }
 }

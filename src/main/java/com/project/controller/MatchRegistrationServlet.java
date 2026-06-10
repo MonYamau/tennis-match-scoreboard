@@ -1,6 +1,7 @@
 package com.project.controller;
 
-import com.project.dto.domain.OngoingMatchDto;
+import com.project.dto.request.RegistrationDto;
+import com.project.dto.response.OngoingMatchDto;
 import com.project.exception.ServletContextException;
 import com.project.service.MatchRegistrationService;
 import com.project.util.JspPages;
@@ -31,11 +32,15 @@ public class MatchRegistrationServlet extends BaseServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        RegistrationDto requestDto = getRequestDtoForPostMethod(req);
+        OngoingMatchDto responseDto = registrationService.registerMatch(requestDto);
+        resp.sendRedirect(req.getContextPath() + "/match-score?uuid=" + responseDto.uuid());
+    }
+
+    private RegistrationDto getRequestDtoForPostMethod(HttpServletRequest req) {
         String firstPlayerName = getNormalizedName(req, "firstPlayer");
         String secondPlayerName = getNormalizedName(req, "secondPlayer");
         ValidationUtil.validateNamesForUnique(firstPlayerName, secondPlayerName);
-
-        OngoingMatchDto responseDto = registrationService.registerMatch(firstPlayerName, secondPlayerName);
-        resp.sendRedirect(req.getContextPath() + "/match-score?uuid=" + responseDto.uuid());
+        return new RegistrationDto(firstPlayerName, secondPlayerName);
     }
 }

@@ -1,13 +1,13 @@
 package com.project.service;
 
-import com.project.dto.domain.OngoingMatchDto;
+import com.project.dto.request.OngoingMatchRequestDto;
+import com.project.dto.response.OngoingMatchDto;
 import com.project.exception.DataNotFoundException;
 import com.project.mapper.OngoingMatchMapper;
 import com.project.model.OngoingMatch;
 import com.project.storage.MatchStorage;
 
 import java.util.Optional;
-import java.util.UUID;
 
 public class MatchScoreService {
     private final OngoingMatchMapper mapper = OngoingMatchMapper.INSTANCE;
@@ -17,18 +17,18 @@ public class MatchScoreService {
         this.matchStorage = matchStorage;
     }
 
-    public OngoingMatchDto getMatch(UUID uuid) {
-        Optional<OngoingMatch> match = matchStorage.find(uuid);
+    public OngoingMatchDto getMatch(OngoingMatchRequestDto requestDto) {
+        Optional<OngoingMatch> match = matchStorage.find(requestDto.uuid());
         if (match.isEmpty()) {
             throw new DataNotFoundException("Couldn't find the current match");
         }
         return mapper.toDto(match.get());
     }
 
-    public OngoingMatchDto recalculateMatch(UUID uuid, int winnerId) {
-        OngoingMatchDto dto = getMatch(uuid);
+    public OngoingMatchDto recalculateMatch(OngoingMatchRequestDto requestDto) {
+        OngoingMatchDto dto = getMatch(requestDto);
         OngoingMatch match = mapper.toModel(dto);
-        match.recalculateScoreForMatch(winnerId);
+        match.recalculateScoreForMatch(requestDto.winnerId());
         matchStorage.save(match);
         return mapper.toDto(match);
     }

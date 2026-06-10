@@ -1,8 +1,9 @@
 package com.project.service;
 
 import com.project.dao.MatchDao;
-import com.project.dto.MatchDto;
-import com.project.dto.MatchPageDto;
+import com.project.dto.request.CollectionFilterDto;
+import com.project.dto.response.MatchDto;
+import com.project.dto.response.MatchPageDto;
 import com.project.mapper.MatchMapper;
 import com.project.model.Match;
 
@@ -20,18 +21,19 @@ public class MatchCollectionService {
         this.matchDao = matchDao;
     }
 
-    public MatchPageDto findMatchesByFilters(int page, String namePattern) {
-        boolean isEmptyFilter = namePattern == null || namePattern.isBlank();
-        int pageCount = isEmptyFilter ? countPages() : countPagesWithFilter(namePattern);
-        int correctPage = Math.min(page, pageCount);
+    public MatchPageDto findMatchesByFilters(CollectionFilterDto requestDto) {
+        String pattern = requestDto.namePattern();
+        boolean isEmptyFilter = pattern == null || pattern.isBlank();
+        int pageCount = isEmptyFilter ? countPages() : countPagesWithFilter(pattern);
+        int correctPage = Math.min(requestDto.page(), pageCount);
         int offsetValue = (correctPage - 1) * LIMIT_VALUE;
         List<Match> matches = isEmptyFilter
                 ? matchDao.findPage(offsetValue, LIMIT_VALUE)
-                : matchDao.findPageByFilters(namePattern, offsetValue, LIMIT_VALUE);
+                : matchDao.findPageByFilters(pattern, offsetValue, LIMIT_VALUE);
         List<MatchDto> matchesDto = matches.stream()
                 .map(mapper::toDto)
                 .collect(Collectors.toList());
-        return new MatchPageDto(correctPage, pageCount, namePattern, matchesDto);
+        return new MatchPageDto(correctPage, pageCount, pattern, matchesDto);
     }
 
     private int countPages() {

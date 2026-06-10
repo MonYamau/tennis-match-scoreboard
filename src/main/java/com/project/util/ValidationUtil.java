@@ -8,7 +8,8 @@ public final class ValidationUtil {
     private static final int NAME_MAX_LENGTH = 40;
     private static final Pattern NAME_PATTERN = Pattern.compile("^[a-zA-Zа-яА-ЯёЁ ]+$");
 
-    private ValidationUtil() {}
+    private ValidationUtil() {
+    }
 
     public static void validateNamesForUnique(String firstPlayerName, String secondPlayerName) {
         if (firstPlayerName.equalsIgnoreCase(secondPlayerName)) {

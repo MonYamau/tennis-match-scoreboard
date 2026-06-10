@@ -1,6 +1,7 @@
 package com.project.controller;
 
-import com.project.dto.MatchPageDto;
+import com.project.dto.request.CollectionFilterDto;
+import com.project.dto.response.MatchPageDto;
 import com.project.exception.ServletContextException;
 import com.project.service.MatchCollectionService;
 import com.project.util.JspPages;
@@ -25,10 +26,15 @@ public class MatchCollectionServlet extends BaseServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        CollectionFilterDto requestDto = getRequestDtoForGetMethod(req);
+        MatchPageDto responseDto = matchCollectionService.findMatchesByFilters(requestDto);
+        req.setAttribute("matchPage", responseDto);
+        req.getRequestDispatcher(JspPages.MATCHES).forward(req, resp);
+    }
+
+    private CollectionFilterDto getRequestDtoForGetMethod(HttpServletRequest req) {
         int page = getNormalizedPage(req, "page");
         String namePattern = req.getParameter("filter_by_player_name");
-        MatchPageDto dto = matchCollectionService.findMatchesByFilters(page, namePattern);
-        req.setAttribute("matchPage", dto);
-        req.getRequestDispatcher(JspPages.MATCHES).forward(req, resp);
+        return new CollectionFilterDto(page, namePattern);
     }
 }
