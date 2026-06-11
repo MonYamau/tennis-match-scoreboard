@@ -1,7 +1,4 @@
-package com.project.model;
-
-import com.project.domain.PlayerNumber;
-import com.project.domain.TennisMatch;
+package com.project.domain;
 
 import java.util.Optional;
 import java.util.UUID;

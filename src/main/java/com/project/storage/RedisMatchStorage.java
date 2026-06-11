@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.project.dto.response.OngoingMatchDto;
 import com.project.exception.StorageException;
 import com.project.mapper.OngoingMatchMapper;
-import com.project.model.OngoingMatch;
+import com.project.domain.OngoingMatch;
 import redis.clients.jedis.RedisClient;
 
 import java.util.Optional;

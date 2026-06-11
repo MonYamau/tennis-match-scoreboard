@@ -6,7 +6,7 @@ import com.project.domain.game.GameMode;
 import com.project.domain.game.TieBreakGame;
 import com.project.dto.domain.CurrentGameDto;
 import com.project.dto.response.OngoingMatchDto;
-import com.project.model.OngoingMatch;
+import com.project.domain.OngoingMatch;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 

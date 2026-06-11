@@ -1,6 +1,6 @@
 package com.project.storage;
 
-import com.project.model.OngoingMatch;
+import com.project.domain.OngoingMatch;
 
 import java.util.Optional;
 import java.util.UUID;
