@@ -11,30 +11,21 @@ public class TieBreakGame implements GameMode {
     private int firstPlayerScore;
     private int secondPlayerScore;
 
-    public TieBreakGame() {
-        this.firstPlayerScore = 0;
-        this.secondPlayerScore = 0;
-    }
-
     public TieBreakGame(int firstPlayerScore, int secondPlayerScore) {
         this.firstPlayerScore = firstPlayerScore;
         this.secondPlayerScore = secondPlayerScore;
+    }
+
+    public static TieBreakGame setupNewTieBreakGame() {
+        return new TieBreakGame(0, 0);
     }
 
     public int getFirstPlayerScore() {
         return firstPlayerScore;
     }
 
-    public void setFirstPlayerScore(int firstPlayerScore) {
-        this.firstPlayerScore = firstPlayerScore;
-    }
-
     public int getSecondPlayerScore() {
         return secondPlayerScore;
-    }
-
-    public void setSecondPlayerScore(int secondPlayerScore) {
-        this.secondPlayerScore = secondPlayerScore;
     }
 
     @Override

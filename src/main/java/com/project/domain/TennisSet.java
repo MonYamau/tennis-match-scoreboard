@@ -15,34 +15,26 @@ public class TennisSet {
     private int secondPlayerScore;
     private GameMode currentGame;
 
-    public TennisSet() {
-        this.firstPlayerScore = 0;
-        this.secondPlayerScore = 0;
-        this.currentGame = new DefaultGame();
+    public TennisSet(int firstPlayerScore, int secondPlayerScore, GameMode currentGame) {
+        this.firstPlayerScore = firstPlayerScore;
+        this.secondPlayerScore = secondPlayerScore;
+        this.currentGame = currentGame;
+    }
+
+    public static TennisSet setupNewTennisSet() {
+        return new TennisSet(0, 0, DefaultGame.setupNewDefaultGame());
     }
 
     public int getFirstPlayerScore() {
         return firstPlayerScore;
     }
 
-    public void setFirstPlayerScore(int firstPlayerScore) {
-        this.firstPlayerScore = firstPlayerScore;
-    }
-
     public int getSecondPlayerScore() {
         return secondPlayerScore;
     }
 
-    public void setSecondPlayerScore(int secondPlayerScore) {
-        this.secondPlayerScore = secondPlayerScore;
-    }
-
     public GameMode getCurrentGame() {
         return currentGame;
-    }
-
-    public void setCurrentGame(GameMode currentGame) {
-        this.currentGame = currentGame;
     }
 
     public Optional<PlayerNumber> recalculateScoreFor(PlayerNumber player) {
@@ -90,9 +82,9 @@ public class TennisSet {
 
     private void setupGameMode() {
         if (firstPlayerScore == MIN_VALUE_SCORE && secondPlayerScore == MIN_VALUE_SCORE) {
-            currentGame = new TieBreakGame();
+            currentGame = TieBreakGame.setupNewTieBreakGame();
         } else {
-            currentGame = new DefaultGame();
+            currentGame = DefaultGame.setupNewDefaultGame();
         }
     }
 }

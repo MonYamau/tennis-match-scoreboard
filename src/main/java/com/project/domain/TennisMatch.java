@@ -9,34 +9,26 @@ public class TennisMatch {
     private int secondPlayerScore;
     private TennisSet currentSet;
 
-    public TennisMatch() {
-        this.firstPlayerScore = 0;
-        this.secondPlayerScore = 0;
-        this.currentSet = new TennisSet();
+    public TennisMatch(int firstPlayerScore, int secondPlayerScore, TennisSet currentSet) {
+        this.firstPlayerScore = firstPlayerScore;
+        this.secondPlayerScore = secondPlayerScore;
+        this.currentSet = currentSet;
+    }
+
+    public static TennisMatch setupNewTennisMatch() {
+        return new TennisMatch(0, 0, TennisSet.setupNewTennisSet());
     }
 
     public int getFirstPlayerScore() {
         return firstPlayerScore;
     }
 
-    public void setFirstPlayerScore(int firstPlayerScore) {
-        this.firstPlayerScore = firstPlayerScore;
-    }
-
     public int getSecondPlayerScore() {
         return secondPlayerScore;
     }
 
-    public void setSecondPlayerScore(int secondPlayerScore) {
-        this.secondPlayerScore = secondPlayerScore;
-    }
-
     public TennisSet getCurrentSet() {
         return currentSet;
-    }
-
-    public void setCurrentSet(TennisSet currentSet) {
-        this.currentSet = currentSet;
     }
 
     public Optional<PlayerNumber> recalculateScoreFor(PlayerNumber player) {
@@ -46,10 +38,10 @@ public class TennisMatch {
         }
         incrementScoreFor(player);
         if (isWin(player)) {
-            currentSet = new TennisSet();
+            currentSet = TennisSet.setupNewTennisSet();
             return Optional.of(player);
         }
-        currentSet = new TennisSet();
+        currentSet = TennisSet.setupNewTennisSet();
         return Optional.empty();
     }
 

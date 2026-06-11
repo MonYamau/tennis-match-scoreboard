@@ -43,7 +43,6 @@ public class RedisMatchStorage implements MatchStorage {
             }
             OngoingMatchDto dto = objectMapper.readValue(json, OngoingMatchDto.class);
             OngoingMatch match = mapper.toModel(dto);
-            match.setUuid(uuid);
             return Optional.of(match);
 
         } catch (Exception e) {
