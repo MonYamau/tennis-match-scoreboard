@@ -32,9 +32,10 @@ public class MatchRegistrationServlet extends BaseServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        setJspForError(req, JspPages.NEW_MATCH);
         RegistrationDto requestDto = getRequestDtoForPostMethod(req);
         OngoingMatchDto responseDto = registrationService.registerMatch(requestDto);
-        resp.sendRedirect(req.getContextPath() + "/match-score?uuid=" + responseDto.uuid());
+        resp.sendRedirect(JspPages.MATCH_SCORE + "?uuid=" + responseDto.uuid());
     }
 
     private RegistrationDto getRequestDtoForPostMethod(HttpServletRequest req) {

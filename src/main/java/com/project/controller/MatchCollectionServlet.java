@@ -26,6 +26,7 @@ public class MatchCollectionServlet extends BaseServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        setJspForError(req, JspPages.MATCHES);
         CollectionFilterDto requestDto = getRequestDtoForGetMethod(req);
         MatchPageDto responseDto = matchCollectionService.findMatchesByFilters(requestDto);
         req.setAttribute("matchPage", responseDto);

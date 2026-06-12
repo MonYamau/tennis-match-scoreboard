@@ -45,7 +45,7 @@ public class MatchScoreServlet extends BaseServlet {
         OngoingMatchRequestDto requestDto = getRequestDtoForPostMethod(req);
         OngoingMatchDto dto = matchScoreService.recalculateMatch(requestDto);
         if (dto.winnerId() == null) {
-            resp.sendRedirect(req.getContextPath() + "/match-score?uuid=" + dto.uuid());
+            resp.sendRedirect(JspPages.MATCH_SCORE + "?uuid=" + dto.uuid());
             return;
         }
         matchCompletionService.finishMatch(dto);

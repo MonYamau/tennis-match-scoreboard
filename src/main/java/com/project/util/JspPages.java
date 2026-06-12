@@ -6,6 +6,7 @@ public final class JspPages {
     public final static String MATCH_SCORE = MAIN_PATH + "/match-score.jsp";
     public final static String MATCHES = MAIN_PATH + "/matches.jsp";
     public final static String FINISHED_MATCH = MAIN_PATH + "/finished-match.jsp";
+    public final static String ERROR = MAIN_PATH + "/error.jsp";
 
     private JspPages() {
     }

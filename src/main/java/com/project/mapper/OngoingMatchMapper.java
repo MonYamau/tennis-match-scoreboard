@@ -1,12 +1,12 @@
 package com.project.mapper;
 
+import com.project.domain.OngoingMatch;
 import com.project.domain.Point;
 import com.project.domain.game.DefaultGame;
 import com.project.domain.game.GameMode;
 import com.project.domain.game.TieBreakGame;
 import com.project.dto.domain.CurrentGameDto;
 import com.project.dto.response.OngoingMatchDto;
-import com.project.domain.OngoingMatch;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
@@ -32,7 +32,7 @@ public interface OngoingMatchMapper {
                     String.valueOf(tieBreakGame.getSecondPlayerScore())
             );
         }
-        throw new IllegalArgumentException("Failed to convert GameMode to record");
+        throw new IllegalStateException("Failed to convert GameMode to record");
     }
 
     default GameMode mapDtoToGameMode(CurrentGameDto dto) {
@@ -47,6 +47,6 @@ public interface OngoingMatchMapper {
                     Integer.parseInt(dto.secondPlayerScore())
             );
         }
-        throw new IllegalArgumentException("Failed to convert record to GameMode");
+        throw new IllegalStateException("Failed to convert record to GameMode");
     }
 }

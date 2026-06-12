@@ -18,6 +18,10 @@ public class BaseServlet extends HttpServlet {
         super.init(config);
     }
 
+    protected void setJspForError(HttpServletRequest req, String path) {
+        req.setAttribute("jspForError", path);
+    }
+
     protected String getNormalizedName(HttpServletRequest req, String parameter) {
         String name = req.getParameter(parameter);
         ValidationUtil.validateName(name);
