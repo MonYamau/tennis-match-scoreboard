@@ -32,7 +32,7 @@ public class ExceptionFilter implements Filter {
         req.setAttribute("errorMessage", message);
         resp.setStatus(statusCode);
         if (statusCode == HttpServletResponse.SC_BAD_REQUEST) {
-            String path = req.getParameter("jspForError");
+            String path = req.getAttribute("jspForError").toString();
             req.getRequestDispatcher(path).forward(req, resp);
         }
         if (statusCode == HttpServletResponse.SC_NOT_FOUND || statusCode == HttpServletResponse.SC_INTERNAL_SERVER_ERROR) {
