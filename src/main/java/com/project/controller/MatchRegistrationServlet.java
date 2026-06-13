@@ -35,7 +35,7 @@ public class MatchRegistrationServlet extends BaseServlet {
         setJspForError(req, JspPages.NEW_MATCH);
         RegistrationDto requestDto = getRequestDtoForPostMethod(req);
         OngoingMatchDto responseDto = registrationService.registerMatch(requestDto);
-        resp.sendRedirect(JspPages.MATCH_SCORE + "?uuid=" + responseDto.uuid());
+        resp.sendRedirect(req.getContextPath() + "/match-score?uuid=" + responseDto.uuid());
     }
 
     private RegistrationDto getRequestDtoForPostMethod(HttpServletRequest req) {

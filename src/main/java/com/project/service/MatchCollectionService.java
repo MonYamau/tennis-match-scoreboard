@@ -25,15 +25,22 @@ public class MatchCollectionService {
         String pattern = requestDto.namePattern();
         boolean isEmptyFilter = pattern == null || pattern.isBlank();
         int pageCount = isEmptyFilter ? countPages() : countPagesWithFilter(pattern);
-        int correctPage = Math.min(requestDto.page(), pageCount);
-        int offsetValue = (correctPage - 1) * LIMIT_VALUE;
+        int page = selectCorrectPage(requestDto.page(), pageCount);
+        int offsetValue = (page - 1) * LIMIT_VALUE;
         List<Match> matches = isEmptyFilter
                 ? matchDao.findPage(offsetValue, LIMIT_VALUE)
                 : matchDao.findPageByFilters(pattern, offsetValue, LIMIT_VALUE);
         List<MatchDto> matchesDto = matches.stream()
                 .map(mapper::toDto)
                 .collect(Collectors.toList());
-        return new MatchPageDto(correctPage, pageCount, pattern, matchesDto);
+        return new MatchPageDto(page, pageCount, pattern, matchesDto);
+    }
+
+    private int selectCorrectPage(int selectedPage, int pageCount) {
+        if (pageCount >= UNIT_PAGE) {
+            return Math.min(selectedPage, pageCount);
+        }
+        return UNIT_PAGE;
     }
 
     private int countPages() {
