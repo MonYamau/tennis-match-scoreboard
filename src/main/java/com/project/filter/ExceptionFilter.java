@@ -23,7 +23,8 @@ public class ExceptionFilter implements Filter {
         } catch (ServletContextException | DatabaseException | StorageException | IllegalStateException e) {
             handleException(req, resp, HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.getMessage());
         } catch (Exception e) {
-            handleException(req, resp, HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Unknown server error");
+            handleException(req, resp, HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
+                    "Unknown server error: " + e.getMessage());
         }
     }
 
