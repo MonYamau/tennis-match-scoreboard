@@ -7,8 +7,14 @@
 <%@include file="WEB-INF/view/fragment/header.jsp"%>
 <main>
     <h1>Добро пожаловать!</h1>
-    <a href="new-match">Создать новый матч</a>
-    <a href="matches">Просмотреть завершённые матчи</a>
+    <div class="home-buttons">
+        <form action="/new-match" method="GET">
+            <button type="submit">Начать новый матч</button>
+        </form>
+        <form action="/matches" method="GET">
+            <button type="submit">Просмотреть завершённые матчи</button>
+        </form>
+    </div>
 </main>
 <%@include file="WEB-INF/view/fragment/footer.jsp"%>
 </body>

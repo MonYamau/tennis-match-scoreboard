@@ -7,15 +7,19 @@
 <body>
 <%@include file="fragment/header.jsp" %>
 <main>
-    <c:choose>
-        <c:when test="${match.winnerId == match.firstPlayerId}">
-            <h1>Победа игрока ${match.firstPlayerName}!</h1>
-        </c:when>
-        <c:when test="${match.winnerId == match.secondPlayerId}">
-            <h1>Победа игрока ${match.secondPlayerName}!</h1>
-        </c:when>
-    </c:choose>
-    <table>
+    <div class="winner-banner">
+        <div class="trophy-icon">🏆</div>
+        <c:choose>
+            <c:when test="${match.winnerId == match.firstPlayerId}">
+                <h1>Победа игрока ${match.firstPlayerName}!</h1>
+            </c:when>
+            <c:when test="${match.winnerId == match.secondPlayerId}">
+                <h1>Победа игрока ${match.secondPlayerName}!</h1>
+            </c:when>
+        </c:choose>
+    </div>
+
+    <table class="final-scoreboard">
         <thead>
         <tr>
             <th>${match.firstPlayerName}</th>
@@ -29,9 +33,12 @@
         </tr>
         </tbody>
     </table>
-    <form action="/" method="GET">
-        <button type="submit">Вернуться на главную страницу</button>
-    </form>
+
+    <div class="center-container">
+        <form action="/" method="GET">
+            <button type="submit">Вернуться на главную страницу</button>
+        </form>
+    </div>
 </main>
 <%@include file="fragment/footer.jsp" %>
 </body>

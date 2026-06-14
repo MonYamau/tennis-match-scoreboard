@@ -31,16 +31,18 @@
         </tr>
         </tbody>
     </table>
-    <form action="/match-score" method="POST">
-        <input type="hidden" name="uuid" value="${match.uuid}">
-        <input type="hidden" name="winnerId" value="${match.firstPlayerId}">
-        <button type="submit">Игрок 1 выиграл очко</button>
-    </form>
-    <form action="/match-score" method="POST">
-        <input type="hidden" name="uuid" value="${match.uuid}">
-        <input type="hidden" name="winnerId" value="${match.secondPlayerId}">
-        <button type="submit">Игрок 2 выиграл очко</button>
-    </form>
+    <div class="match-controls">
+        <form action="/match-score" method="POST">
+            <input type="hidden" name="uuid" value="${match.uuid}">
+            <input type="hidden" name="winnerId" value="${match.firstPlayerId}">
+            <button type="submit">Игрок 1 выиграл очко</button>
+        </form>
+        <form action="/match-score" method="POST">
+            <input type="hidden" name="uuid" value="${match.uuid}">
+            <input type="hidden" name="winnerId" value="${match.secondPlayerId}">
+            <button type="submit">Игрок 2 выиграл очко</button>
+        </form>
+    </div>
 </main>
 <%@include file="fragment/footer.jsp" %>
 </body>
