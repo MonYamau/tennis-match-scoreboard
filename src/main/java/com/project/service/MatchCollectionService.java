@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class MatchCollectionService {
-    private final static int LIMIT_VALUE = 8;
+    private final static int LIMIT_VALUE = 4;
     private final static int UNIT_PAGE = 1;
 
     private final MatchMapper mapper = MatchMapper.INSTANCE;
