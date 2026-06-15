@@ -35,7 +35,7 @@ public class MatchCollectionServlet extends BaseServlet {
 
     private CollectionFilterDto getRequestDtoForGetMethod(HttpServletRequest req) {
         int page = getNormalizedPage(req, "page");
-        String namePattern = req.getParameter("filter_by_player_name");
+        String namePattern = getNormalizedPattern(req, "filter_by_player_name");
         return new CollectionFilterDto(page, namePattern);
     }
 }

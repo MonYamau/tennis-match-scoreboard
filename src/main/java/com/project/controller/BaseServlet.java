@@ -28,6 +28,14 @@ public class BaseServlet extends HttpServlet {
         return name.strip();
     }
 
+    protected String getNormalizedPattern(HttpServletRequest req, String parameter) {
+        String pattern = req.getParameter(parameter);
+        if (pattern != null) {
+            return pattern.strip();
+        }
+        return null;
+    }
+
     protected int getNormalizedPage(HttpServletRequest req, String parameter) {
         String pageParam = req.getParameter(parameter);
         if (pageParam == null) {
