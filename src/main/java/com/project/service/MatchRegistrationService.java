@@ -8,19 +8,16 @@ import com.project.dto.response.OngoingMatchDto;
 import com.project.mapper.OngoingMatchMapper;
 import com.project.model.Player;
 import com.project.storage.MatchStorage;
+import lombok.RequiredArgsConstructor;
 
 import java.util.Optional;
 import java.util.UUID;
 
+@RequiredArgsConstructor
 public class MatchRegistrationService {
     private final OngoingMatchMapper mapper = OngoingMatchMapper.INSTANCE;
     private final MatchStorage matchStorage;
     private final PlayerDao playerDao;
-
-    public MatchRegistrationService(MatchStorage matchStorage, PlayerDao playerDao) {
-        this.matchStorage = matchStorage;
-        this.playerDao = playerDao;
-    }
 
     public OngoingMatchDto registerMatch(RegistrationDto registrationDto) {
         Player firstPlayer = savePlayer(registrationDto.firstPlayerName());

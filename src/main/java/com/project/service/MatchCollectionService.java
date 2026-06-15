@@ -6,20 +6,18 @@ import com.project.dto.response.MatchDto;
 import com.project.dto.response.MatchPageDto;
 import com.project.mapper.MatchMapper;
 import com.project.model.Match;
+import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@RequiredArgsConstructor
 public class MatchCollectionService {
-    private final static int LIMIT_VALUE = 4;
+    private final static int LIMIT_VALUE = 6;
     private final static int UNIT_PAGE = 1;
 
     private final MatchMapper mapper = MatchMapper.INSTANCE;
     private final MatchDao matchDao;
-
-    public MatchCollectionService(MatchDao matchDao) {
-        this.matchDao = matchDao;
-    }
 
     public MatchPageDto findMatchesByFilters(CollectionFilterDto requestDto) {
         String pattern = requestDto.namePattern();

@@ -2,21 +2,19 @@ package com.project.dao;
 
 import com.project.exception.DatabaseException;
 import com.project.model.Player;
+import lombok.RequiredArgsConstructor;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 import java.util.Optional;
 
+@RequiredArgsConstructor
 public class HibernatePlayerDao implements PlayerDao {
     private final static String FINDING_QUERY = """
             FROM Player WHERE name = :name
             """;
 
     private final SessionFactory sessionFactory;
-
-    public HibernatePlayerDao(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
-    }
 
     @Override
     public Optional<Player> findByName(String name) {

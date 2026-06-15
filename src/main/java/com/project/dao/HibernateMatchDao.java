@@ -2,6 +2,7 @@ package com.project.dao;
 
 import com.project.exception.DatabaseException;
 import com.project.model.Match;
+import lombok.RequiredArgsConstructor;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
@@ -9,6 +10,7 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Optional;
 
+@RequiredArgsConstructor
 public class HibernateMatchDao implements Serializable, MatchDao {
     private final static String FINDING_QUERY = """
             SELECT m
@@ -30,10 +32,6 @@ public class HibernateMatchDao implements Serializable, MatchDao {
             ORDER BY m.id DESC""";
 
     private final SessionFactory sessionFactory;
-
-    public HibernateMatchDao(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
-    }
 
     @Override
     public List<Match> findPage(int index, int limit) {

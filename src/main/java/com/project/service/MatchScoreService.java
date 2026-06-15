@@ -6,16 +6,14 @@ import com.project.dto.response.OngoingMatchDto;
 import com.project.exception.DataNotFoundException;
 import com.project.mapper.OngoingMatchMapper;
 import com.project.storage.MatchStorage;
+import lombok.RequiredArgsConstructor;
 
 import java.util.Optional;
 
+@RequiredArgsConstructor
 public class MatchScoreService {
     private final OngoingMatchMapper mapper = OngoingMatchMapper.INSTANCE;
     private final MatchStorage matchStorage;
-
-    public MatchScoreService(MatchStorage matchStorage) {
-        this.matchStorage = matchStorage;
-    }
 
     public OngoingMatchDto getMatch(OngoingMatchRequestDto requestDto) {
         Optional<OngoingMatch> match = matchStorage.find(requestDto.uuid());

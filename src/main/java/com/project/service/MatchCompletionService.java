@@ -6,19 +6,15 @@ import com.project.dto.response.OngoingMatchDto;
 import com.project.model.Match;
 import com.project.model.Player;
 import com.project.storage.MatchStorage;
+import lombok.RequiredArgsConstructor;
 
 import java.util.Optional;
 
+@RequiredArgsConstructor
 public class MatchCompletionService {
     private final MatchDao matchDao;
     private final PlayerDao playerDao;
     private final MatchStorage matchStorage;
-
-    public MatchCompletionService(MatchDao matchDao, PlayerDao playerDao, MatchStorage matchStorage) {
-        this.matchDao = matchDao;
-        this.playerDao = playerDao;
-        this.matchStorage = matchStorage;
-    }
 
     public void finishMatch(OngoingMatchDto matchDto) {
         matchStorage.delete(matchDto.uuid());

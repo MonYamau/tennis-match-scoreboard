@@ -5,20 +5,17 @@ import com.project.domain.OngoingMatch;
 import com.project.dto.response.OngoingMatchDto;
 import com.project.exception.StorageException;
 import com.project.mapper.OngoingMatchMapper;
+import lombok.RequiredArgsConstructor;
 import redis.clients.jedis.RedisClient;
 
 import java.util.Optional;
 import java.util.UUID;
 
+@RequiredArgsConstructor
 public class RedisMatchStorage implements MatchStorage {
     private final ObjectMapper objectMapper;
     private final RedisClient redisClient;
     private final OngoingMatchMapper mapper = OngoingMatchMapper.INSTANCE;
-
-    public RedisMatchStorage(ObjectMapper objectMapper, RedisClient redisClient) {
-        this.objectMapper = objectMapper;
-        this.redisClient = redisClient;
-    }
 
     @Override
     public void save(OngoingMatch match) {
