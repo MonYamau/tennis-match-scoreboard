@@ -151,10 +151,23 @@ input[type="text"] {
     align-items: center;
 }
 
-.name-filter { gap: 10px; margin: 20px 0; }
-.matches-return-button { margin: 20px 0; }
-.match-controls { gap: 20px; margin-top: 30px; }
-.center-container { margin-top: 40px; }
+.name-filter {
+    gap: 10px;
+    margin: 20px 0;
+}
+
+.matches-return-button {
+    margin: 20px 0;
+}
+
+.match-controls {
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.center-container {
+    margin-top: 40px;
+}
 
 .match-form {
     display: flex;

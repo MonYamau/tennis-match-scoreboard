@@ -4,7 +4,7 @@
     <title>Главная страница</title>
 </head>
 <body>
-<%@include file="WEB-INF/view/fragment/header.jsp"%>
+<%@include file="WEB-INF/view/fragment/header.jsp" %>
 <main>
     <h1>Добро пожаловать!</h1>
     <div class="home-buttons">
@@ -16,6 +16,6 @@
         </form>
     </div>
 </main>
-<%@include file="WEB-INF/view/fragment/footer.jsp"%>
+<%@include file="WEB-INF/view/fragment/footer.jsp" %>
 </body>
 </html>
