@@ -25,8 +25,7 @@ public enum Point {
             case ADVANTAGE -> {
                 return GAME;
             }
-            //СМЕНИТЬ ИСКЛЮЧЕНИЕ
-            default -> throw new RuntimeException();
+            default -> throw new IllegalStateException("Failed to identify the game counter");
         }
     }
 }
