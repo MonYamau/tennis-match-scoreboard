@@ -4,12 +4,13 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Check;
 
 @Getter
-@Setter
 @NoArgsConstructor
 @Entity
 @Table(name = "Matches")
+@Check(constraints = "FIRST_PLAYER <> SECOND_PLAYER AND (WINNER = FIRST_PLAYER OR WINNER = SECOND_PLAYER)")
 public class Match {
     @Id
     @Column(name = "ID")
@@ -17,15 +18,15 @@ public class Match {
     private int id;
 
     @ManyToOne
-    @JoinColumn(name = "FIRST_PLAYER", referencedColumnName = "id")
+    @JoinColumn(name = "FIRST_PLAYER", referencedColumnName = "id", nullable = false)
     private Player firstPlayer;
 
     @ManyToOne
-    @JoinColumn(name = "SECOND_PLAYER", referencedColumnName = "id")
+    @JoinColumn(name = "SECOND_PLAYER", referencedColumnName = "id", nullable = false)
     private Player secondPlayer;
 
     @ManyToOne
-    @JoinColumn(name = "WINNER", referencedColumnName = "id")
+    @JoinColumn(name = "WINNER", referencedColumnName = "id", nullable = false)
     private Player winner;
 
     public Match(Player firstPlayer, Player secondPlayer, Player winner) {
