@@ -2,6 +2,7 @@ package com.project.dao;
 
 import com.project.exception.DatabaseException;
 import com.project.model.Player;
+import jakarta.persistence.PersistenceException;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -28,9 +29,13 @@ public class HibernatePlayerDao implements PlayerDao {
             session.getTransaction().commit();
             return player;
 
-        } catch (Exception e) {
-            session.getTransaction().rollback();
+        } catch (PersistenceException e) {
+            if (session.getTransaction() != null && session.getTransaction().isActive()) {
+                session.getTransaction().rollback();
+            }
             throw new DatabaseException("Failed to find player from the database\n" + e.getMessage());
+        } catch (Exception e) {
+            throw new IllegalStateException("An unknown error occurred while working with the database\n" + e.getMessage());
         }
     }
 
@@ -45,9 +50,13 @@ public class HibernatePlayerDao implements PlayerDao {
             session.getTransaction().commit();
             return Optional.of(player);
 
-        } catch (Exception e) {
-            session.getTransaction().rollback();
+        } catch (PersistenceException e) {
+            if (session.getTransaction() != null && session.getTransaction().isActive()) {
+                session.getTransaction().rollback();
+            }
             throw new DatabaseException("Failed to save player to the database\n" + e.getMessage());
+        } catch (Exception e) {
+            throw new IllegalStateException("An unknown error occurred while working with the database\n" + e.getMessage());
         }
     }
 }
