@@ -1,7 +1,13 @@
 package com.project.model;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@Getter
+@Setter
+@NoArgsConstructor
 @Entity
 @Table(name = "Matches")
 public class Match {
@@ -22,44 +28,9 @@ public class Match {
     @JoinColumn(name = "WINNER", referencedColumnName = "id")
     private Player winner;
 
-    public Match() {
-    }
-
     public Match(Player firstPlayer, Player secondPlayer, Player winner) {
         this.firstPlayer = firstPlayer;
         this.secondPlayer = secondPlayer;
-        this.winner = winner;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public Player getFirstPlayer() {
-        return firstPlayer;
-    }
-
-    public void setFirstPlayer(Player firstPlayer) {
-        this.firstPlayer = firstPlayer;
-    }
-
-    public Player getSecondPlayer() {
-        return secondPlayer;
-    }
-
-    public void setSecondPlayer(Player secondPlayer) {
-        this.secondPlayer = secondPlayer;
-    }
-
-    public Player getWinner() {
-        return winner;
-    }
-
-    public void setWinner(Player winner) {
         this.winner = winner;
     }
 }

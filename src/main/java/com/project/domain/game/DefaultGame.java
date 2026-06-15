@@ -2,30 +2,21 @@ package com.project.domain.game;
 
 import com.project.domain.PlayerNumber;
 import com.project.domain.Point;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 import java.util.Optional;
 
+@Getter
+@AllArgsConstructor
 public class DefaultGame implements GameMode {
     private static final int THIRTY_ORDINAL_NUMBER = Point.THIRTY.ordinal();
 
     private Point firstPlayerScore;
     private Point secondPlayerScore;
 
-    public DefaultGame(Point firstPlayerScore, Point secondPlayerScore) {
-        this.firstPlayerScore = firstPlayerScore;
-        this.secondPlayerScore = secondPlayerScore;
-    }
-
     public static DefaultGame setupNewDefaultGame() {
         return new DefaultGame(Point.ZERO, Point.ZERO);
-    }
-
-    public Point getFirstPlayerScore() {
-        return firstPlayerScore;
-    }
-
-    public Point getSecondPlayerScore() {
-        return secondPlayerScore;
     }
 
     @Override

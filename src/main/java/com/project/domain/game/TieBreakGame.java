@@ -1,9 +1,13 @@
 package com.project.domain.game;
 
 import com.project.domain.PlayerNumber;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 import java.util.Optional;
 
+@Getter
+@AllArgsConstructor
 public class TieBreakGame implements GameMode {
     private static final int PREPONDERANCE = 2;
     private static final int MIN_VALUE_SCORE = 7;
@@ -11,21 +15,8 @@ public class TieBreakGame implements GameMode {
     private int firstPlayerScore;
     private int secondPlayerScore;
 
-    public TieBreakGame(int firstPlayerScore, int secondPlayerScore) {
-        this.firstPlayerScore = firstPlayerScore;
-        this.secondPlayerScore = secondPlayerScore;
-    }
-
     public static TieBreakGame setupNewTieBreakGame() {
         return new TieBreakGame(0, 0);
-    }
-
-    public int getFirstPlayerScore() {
-        return firstPlayerScore;
-    }
-
-    public int getSecondPlayerScore() {
-        return secondPlayerScore;
     }
 
     @Override

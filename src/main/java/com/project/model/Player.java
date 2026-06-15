@@ -1,9 +1,15 @@
 package com.project.model;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.List;
 
+@Getter
+@Setter
+@NoArgsConstructor
 @Entity
 @Table(name = "Players")
 public class Player {
@@ -21,9 +27,6 @@ public class Player {
     @OneToMany(mappedBy = "secondPlayer")
     private List<Match> matchesBySecondPlayer;
 
-    public Player() {
-    }
-
     public Player(String name) {
         this.name = name;
     }
@@ -31,38 +34,6 @@ public class Player {
     public Player(String name, List<Match> matchesByFirstPlayer, List<Match> matchesBySecondPlayer) {
         this.name = name;
         this.matchesByFirstPlayer = matchesByFirstPlayer;
-        this.matchesBySecondPlayer = matchesBySecondPlayer;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public List<Match> getMatchesByFirstPlayer() {
-        return matchesByFirstPlayer;
-    }
-
-    public void setMatchesByFirstPlayer(List<Match> matchesByFirstPlayer) {
-        this.matchesByFirstPlayer = matchesByFirstPlayer;
-    }
-
-    public List<Match> getMatchesBySecondPlayer() {
-        return matchesBySecondPlayer;
-    }
-
-    public void setMatchesBySecondPlayer(List<Match> matchesBySecondPlayer) {
         this.matchesBySecondPlayer = matchesBySecondPlayer;
     }
 }

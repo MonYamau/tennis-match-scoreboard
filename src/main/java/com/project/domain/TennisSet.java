@@ -3,9 +3,13 @@ package com.project.domain;
 import com.project.domain.game.DefaultGame;
 import com.project.domain.game.GameMode;
 import com.project.domain.game.TieBreakGame;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 import java.util.Optional;
 
+@Getter
+@AllArgsConstructor
 public class TennisSet {
     private static final int PREPONDERANCE = 2;
     private static final int MIN_VALUE_SCORE = 6;
@@ -15,26 +19,8 @@ public class TennisSet {
     private int secondPlayerScore;
     private GameMode currentGame;
 
-    public TennisSet(int firstPlayerScore, int secondPlayerScore, GameMode currentGame) {
-        this.firstPlayerScore = firstPlayerScore;
-        this.secondPlayerScore = secondPlayerScore;
-        this.currentGame = currentGame;
-    }
-
     public static TennisSet setupNewTennisSet() {
         return new TennisSet(0, 0, DefaultGame.setupNewDefaultGame());
-    }
-
-    public int getFirstPlayerScore() {
-        return firstPlayerScore;
-    }
-
-    public int getSecondPlayerScore() {
-        return secondPlayerScore;
-    }
-
-    public GameMode getCurrentGame() {
-        return currentGame;
     }
 
     public Optional<PlayerNumber> recalculateScoreFor(PlayerNumber player) {

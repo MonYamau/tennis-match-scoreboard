@@ -1,7 +1,12 @@
 package com.project.domain;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
 import java.util.Optional;
 
+@Getter
+@AllArgsConstructor
 public class TennisMatch {
     private static final int FINAL_SCORE = 2;
 
@@ -9,26 +14,8 @@ public class TennisMatch {
     private int secondPlayerScore;
     private TennisSet currentSet;
 
-    public TennisMatch(int firstPlayerScore, int secondPlayerScore, TennisSet currentSet) {
-        this.firstPlayerScore = firstPlayerScore;
-        this.secondPlayerScore = secondPlayerScore;
-        this.currentSet = currentSet;
-    }
-
     public static TennisMatch setupNewTennisMatch() {
         return new TennisMatch(0, 0, TennisSet.setupNewTennisSet());
-    }
-
-    public int getFirstPlayerScore() {
-        return firstPlayerScore;
-    }
-
-    public int getSecondPlayerScore() {
-        return secondPlayerScore;
-    }
-
-    public TennisSet getCurrentSet() {
-        return currentSet;
     }
 
     public Optional<PlayerNumber> recalculateScoreFor(PlayerNumber player) {
