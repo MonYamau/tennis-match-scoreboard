@@ -33,9 +33,9 @@ public class HibernatePlayerDao implements PlayerDao {
             if (session.getTransaction() != null && session.getTransaction().isActive()) {
                 session.getTransaction().rollback();
             }
-            throw new DatabaseException("Failed to find player from the database\n" + e.getMessage());
+            throw new DatabaseException("Failed to find player from the database", e);
         } catch (Exception e) {
-            throw new IllegalStateException("An unknown error occurred while working with the database\n" + e.getMessage());
+            throw new IllegalStateException("An unknown error occurred while working with the database", e);
         }
     }
 
@@ -54,9 +54,9 @@ public class HibernatePlayerDao implements PlayerDao {
             if (session.getTransaction() != null && session.getTransaction().isActive()) {
                 session.getTransaction().rollback();
             }
-            throw new DatabaseException("Failed to save player to the database\n" + e.getMessage());
+            throw new DatabaseException("Failed to save player to the database", e);
         } catch (Exception e) {
-            throw new IllegalStateException("An unknown error occurred while working with the database\n" + e.getMessage());
+            throw new IllegalStateException("An unknown error occurred while working with the database", e);
         }
     }
 }
