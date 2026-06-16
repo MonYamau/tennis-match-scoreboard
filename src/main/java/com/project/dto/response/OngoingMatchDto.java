@@ -1,6 +1,6 @@
 package com.project.dto.response;
 
-import com.project.dto.domain.CurrentMatchDto;
+import com.project.dto.match.CurrentMatchDto;
 
 import java.util.UUID;
 
