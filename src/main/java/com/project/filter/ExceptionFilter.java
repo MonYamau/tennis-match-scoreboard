@@ -24,12 +24,9 @@ public class ExceptionFilter implements Filter {
             handleException(req, resp, HttpServletResponse.SC_BAD_REQUEST, e.getMessage());
         } catch (DataNotFoundException e) {
             handleException(req, resp, HttpServletResponse.SC_NOT_FOUND, e.getMessage());
-        } catch (ServletContextException | DatabaseException | StorageException | IllegalStateException e) {
-            log.error("An error occurred while processing the request", e);
-            handleException(req, resp, HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.getMessage());
         } catch (Exception e) {
-            log.error("An unknown error occurred while processing the request", e);
-            handleException(req, resp, HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "unknown server error");
+            log.error("An error occurred while processing the request", e);
+            handleException(req, resp, HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "server error");
         }
     }
 
