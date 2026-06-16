@@ -53,14 +53,14 @@ public class TennisSet {
     }
 
     private boolean isWinOfFirstPlayer() {
-        if (currentGame.getClass().equals(TieBreakGame.class)) {
+        if (currentGame instanceof TieBreakGame) {
             return firstPlayerScore == TIE_BREAK_WIN;
         }
         return firstPlayerScore >= MIN_VALUE_SCORE && (firstPlayerScore - secondPlayerScore >= PREPONDERANCE);
     }
 
     private boolean isWinOfSecondPlayer() {
-        if (currentGame.getClass().equals(TieBreakGame.class)) {
+        if (currentGame instanceof TieBreakGame) {
             return secondPlayerScore == TIE_BREAK_WIN;
         }
         return secondPlayerScore >= MIN_VALUE_SCORE && (secondPlayerScore - firstPlayerScore >= PREPONDERANCE);
