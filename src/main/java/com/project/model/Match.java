@@ -1,12 +1,13 @@
 package com.project.model;
 
 import jakarta.persistence.*;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Check;
 
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @Table(name = "Matches")
 @Check(constraints = "FIRST_PLAYER <> SECOND_PLAYER AND (WINNER = FIRST_PLAYER OR WINNER = SECOND_PLAYER)")

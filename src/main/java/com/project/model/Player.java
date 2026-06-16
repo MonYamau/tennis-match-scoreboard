@@ -1,11 +1,12 @@
 package com.project.model;
 
 import jakarta.persistence.*;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @Table(name = "Players")
 public class Player {
@@ -14,7 +15,7 @@ public class Player {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "name", length = 40, unique = true)
+    @Column(name = "NAME", length = 40, unique = true, nullable = false)
     private String name;
 
     public Player(String name) {
