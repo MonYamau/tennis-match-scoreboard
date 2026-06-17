@@ -6,6 +6,7 @@ import jakarta.persistence.PersistenceException;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 
 import java.io.Serializable;
 import java.util.List;
@@ -46,14 +47,12 @@ public class HibernateMatchDao implements Serializable, MatchDao {
                     .getResultList();
             session.getTransaction().commit();
             return matches;
-
-        } catch (PersistenceException e) {
-            if (session.getTransaction() != null && session.getTransaction().isActive()) {
-                session.getTransaction().rollback();
-            }
-            throw new DatabaseException("Failed to find page from the database", e);
+        } catch (PersistenceException originalException) {
+            Exception exception = handleRollback(originalException, session.getTransaction());
+            throw new DatabaseException("Failed to find page from the database", exception);
         } catch (Exception e) {
-            throw new IllegalStateException("An unknown error occurred while working with the database", e);
+            Exception exception = handleRollback(e, session.getTransaction());
+            throw new IllegalStateException("An unknown error occurred while working with the database", exception);
         }
     }
 
@@ -71,13 +70,12 @@ public class HibernateMatchDao implements Serializable, MatchDao {
             session.getTransaction().commit();
             return matches;
 
-        } catch (PersistenceException e) {
-            if (session.getTransaction() != null && session.getTransaction().isActive()) {
-                session.getTransaction().rollback();
-            }
-            throw new DatabaseException("Failed to find page with filters from the database", e);
+        } catch (PersistenceException originalException) {
+            Exception exception = handleRollback(originalException, session.getTransaction());
+            throw new DatabaseException("Failed to find page with filters from the database", exception);
         } catch (Exception e) {
-            throw new IllegalStateException("An unknown error occurred while working with the database", e);
+            Exception exception = handleRollback(e, session.getTransaction());
+            throw new IllegalStateException("An unknown error occurred while working with the database", exception);
         }
     }
 
@@ -92,13 +90,12 @@ public class HibernateMatchDao implements Serializable, MatchDao {
             session.getTransaction().commit();
             return counter;
 
-        } catch (PersistenceException e) {
-            if (session.getTransaction() != null && session.getTransaction().isActive()) {
-                session.getTransaction().rollback();
-            }
-            throw new DatabaseException("Failed to count entities from the database", e);
+        } catch (PersistenceException originalException) {
+            Exception exception = handleRollback(originalException, session.getTransaction());
+            throw new DatabaseException("Failed to count entities from the database", exception);
         } catch (Exception e) {
-            throw new IllegalStateException("An unknown error occurred while working with the database", e);
+            Exception exception = handleRollback(e, session.getTransaction());
+            throw new IllegalStateException("An unknown error occurred while working with the database", exception);
         }
     }
 
@@ -114,13 +111,12 @@ public class HibernateMatchDao implements Serializable, MatchDao {
             session.getTransaction().commit();
             return counter;
 
-        } catch (PersistenceException e) {
-            if (session.getTransaction() != null && session.getTransaction().isActive()) {
-                session.getTransaction().rollback();
-            }
-            throw new DatabaseException("Failed to count entities from the database with filters", e);
+        } catch (PersistenceException originalException) {
+            Exception exception = handleRollback(originalException, session.getTransaction());
+            throw new DatabaseException("Failed to count entities from the database with filters", exception);
         } catch (Exception e) {
-            throw new IllegalStateException("An unknown error occurred while working with the database", e);
+            Exception exception = handleRollback(e, session.getTransaction());
+            throw new IllegalStateException("An unknown error occurred while working with the database", exception);
         }
     }
 
@@ -135,13 +131,23 @@ public class HibernateMatchDao implements Serializable, MatchDao {
             session.getTransaction().commit();
             return Optional.of(match);
 
-        } catch (PersistenceException e) {
-            if (session.getTransaction() != null && session.getTransaction().isActive()) {
-                session.getTransaction().rollback();
-            }
-            throw new DatabaseException("Failed to save match to the database", e);
+        } catch (PersistenceException originalException) {
+            Exception exception = handleRollback(originalException, session.getTransaction());
+            throw new DatabaseException("Failed to save match to the database", exception);
         } catch (Exception e) {
-            throw new IllegalStateException("An unknown error occurred while working with the database", e);
+            Exception exception = handleRollback(e, session.getTransaction());
+            throw new IllegalStateException("An unknown error occurred while working with the database", exception);
         }
+    }
+
+    private Exception handleRollback(Exception originalException, Transaction transaction) {
+        if (transaction != null && transaction.isActive()) {
+            try {
+                transaction.rollback();
+            } catch (Exception rollbackException) {
+                originalException.addSuppressed(rollbackException);
+            }
+        }
+        return originalException;
     }
 }
