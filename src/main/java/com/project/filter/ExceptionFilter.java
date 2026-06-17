@@ -1,7 +1,8 @@
 package com.project.filter;
 
 
-import com.project.exception.*;
+import com.project.exception.DataNotFoundException;
+import com.project.exception.IncorrectInputException;
 import com.project.util.JspPages;
 import jakarta.servlet.*;
 import jakarta.servlet.http.HttpServletRequest;
@@ -25,7 +26,7 @@ public class ExceptionFilter implements Filter {
         } catch (DataNotFoundException e) {
             handleException(req, resp, HttpServletResponse.SC_NOT_FOUND, e.getMessage());
         } catch (Exception e) {
-            log.error("An error occurred while processing the request", e);
+            log.error("Server error while processing the request", e);
             handleException(req, resp, HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "server error");
         }
     }
