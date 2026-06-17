@@ -58,6 +58,5 @@ public class AppContextListener implements ServletContextListener {
         if (redisClient != null) {
             redisClient.close();
         }
-        log.info("Successful application shutdown");
     }
 }
