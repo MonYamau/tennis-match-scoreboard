@@ -1,7 +1,7 @@
 package com.project.dao;
 
+import com.project.entity.Match;
 import com.project.exception.DatabaseException;
-import com.project.model.Match;
 import jakarta.persistence.PersistenceException;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.Session;

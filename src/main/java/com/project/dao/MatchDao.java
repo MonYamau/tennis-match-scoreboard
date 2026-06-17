@@ -1,6 +1,6 @@
 package com.project.dao;
 
-import com.project.model.Match;
+import com.project.entity.Match;
 
 import java.util.List;
 

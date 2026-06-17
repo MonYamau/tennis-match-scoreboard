@@ -3,8 +3,8 @@ package com.project.service;
 import com.project.dao.MatchDao;
 import com.project.dao.PlayerDao;
 import com.project.dto.response.OngoingMatchDto;
-import com.project.model.Match;
-import com.project.model.Player;
+import com.project.entity.Match;
+import com.project.entity.Player;
 import com.project.storage.MatchStorage;
 import lombok.RequiredArgsConstructor;
 

@@ -1,7 +1,7 @@
 package com.project.dao;
 
+import com.project.entity.Player;
 import com.project.exception.DatabaseException;
-import com.project.model.Player;
 import jakarta.persistence.PersistenceException;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.Session;

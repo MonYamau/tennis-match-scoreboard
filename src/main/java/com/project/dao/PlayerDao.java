@@ -1,6 +1,6 @@
 package com.project.dao;
 
-import com.project.model.Player;
+import com.project.entity.Player;
 
 import java.util.Optional;
 

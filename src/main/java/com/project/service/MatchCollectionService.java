@@ -4,8 +4,8 @@ import com.project.dao.MatchDao;
 import com.project.dto.request.CollectionFilterDto;
 import com.project.dto.response.MatchDto;
 import com.project.dto.response.MatchPageDto;
+import com.project.entity.Match;
 import com.project.mapper.MatchMapper;
-import com.project.model.Match;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;

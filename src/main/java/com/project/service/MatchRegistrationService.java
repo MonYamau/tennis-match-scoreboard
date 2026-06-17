@@ -5,8 +5,8 @@ import com.project.domain.OngoingMatch;
 import com.project.domain.TennisMatch;
 import com.project.dto.request.RegistrationDto;
 import com.project.dto.response.OngoingMatchDto;
+import com.project.entity.Player;
 import com.project.mapper.OngoingMatchMapper;
-import com.project.model.Player;
 import com.project.storage.MatchStorage;
 import lombok.RequiredArgsConstructor;
 

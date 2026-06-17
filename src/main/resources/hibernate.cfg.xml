@@ -17,7 +17,7 @@
         <property name="hibernate.hikari.connectionTimeout">20000</property>
         <property name="hibernate.hbm2ddl.auto">create-drop</property>
 
-        <mapping class="com.project.model.Match"/>
-        <mapping class="com.project.model.Player"/>
+        <mapping class="com.project.entity.Match"/>
+        <mapping class="com.project.entity.Player"/>
     </session-factory>
 </hibernate-configuration>
