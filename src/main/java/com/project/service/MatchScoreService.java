@@ -26,7 +26,7 @@ public class MatchScoreService {
     public OngoingMatchDto recalculateMatch(OngoingMatchRequestDto requestDto) {
         OngoingMatchDto dto = getMatch(requestDto);
         OngoingMatch match = mapper.toModel(dto);
-        match.recalculateScoreForMatch(requestDto.winnerId());
+        match.recalculateScoreFor(requestDto.winnerId());
         matchStorage.save(match);
         return mapper.toDto(match);
     }

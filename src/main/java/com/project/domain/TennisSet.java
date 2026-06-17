@@ -40,8 +40,10 @@ public class TennisSet {
     private void incrementScoreFor(PlayerNumber playerNumber) {
         if (playerNumber.equals(PlayerNumber.FIRST_PLAYER)) {
             firstPlayerScore++;
-        } else {
+        } else if (playerNumber.equals(PlayerNumber.SECOND_PLAYER)) {
             secondPlayerScore++;
+        } else {
+            throw new IllegalArgumentException("invalid value for counter increment");
         }
     }
 
@@ -49,21 +51,30 @@ public class TennisSet {
         if (playerNumber.equals(PlayerNumber.FIRST_PLAYER)) {
             return isWinOfFirstPlayer();
         }
-        return isWinOfSecondPlayer();
+        if (playerNumber.equals(PlayerNumber.SECOND_PLAYER)) {
+            return isWinOfSecondPlayer();
+        }
+        throw new IllegalArgumentException("invalid value for player identification");
     }
 
     private boolean isWinOfFirstPlayer() {
         if (currentGame instanceof TieBreakGame) {
             return firstPlayerScore == TIE_BREAK_WIN;
         }
-        return firstPlayerScore >= MIN_VALUE_SCORE && (firstPlayerScore - secondPlayerScore >= PREPONDERANCE);
+        if (currentGame instanceof DefaultGame) {
+            return firstPlayerScore >= MIN_VALUE_SCORE && (firstPlayerScore - secondPlayerScore >= PREPONDERANCE);
+        }
+        throw new IllegalStateException("invalid state of the current game");
     }
 
     private boolean isWinOfSecondPlayer() {
         if (currentGame instanceof TieBreakGame) {
             return secondPlayerScore == TIE_BREAK_WIN;
         }
-        return secondPlayerScore >= MIN_VALUE_SCORE && (secondPlayerScore - firstPlayerScore >= PREPONDERANCE);
+        if (currentGame instanceof DefaultGame) {
+            return secondPlayerScore >= MIN_VALUE_SCORE && (secondPlayerScore - firstPlayerScore >= PREPONDERANCE);
+        }
+        throw new IllegalStateException("invalid state of the current game");
     }
 
     private void setupGameMode() {

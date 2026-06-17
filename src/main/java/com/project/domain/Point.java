@@ -25,7 +25,7 @@ public enum Point {
             case ADVANTAGE -> {
                 return GAME;
             }
-            default -> throw new IllegalStateException("Failed to identify the game counter");
+            default -> throw new IllegalArgumentException("Failed to identify the game counter");
         }
     }
 }

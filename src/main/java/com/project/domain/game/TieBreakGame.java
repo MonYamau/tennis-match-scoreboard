@@ -31,8 +31,10 @@ public class TieBreakGame implements GameMode {
     private void incrementScoreFor(PlayerNumber playerNumber) {
         if (playerNumber.equals(PlayerNumber.FIRST_PLAYER)) {
             firstPlayerScore++;
-        } else {
+        } else if (playerNumber.equals(PlayerNumber.SECOND_PLAYER)) {
             secondPlayerScore++;
+        } else {
+            throw new IllegalArgumentException("invalid value for counter increment");
         }
     }
 
@@ -40,7 +42,10 @@ public class TieBreakGame implements GameMode {
         if (playerNumber.equals(PlayerNumber.FIRST_PLAYER)) {
             return isWinOfFirstPlayer();
         }
-        return isWinOfSecondPlayer();
+        if (playerNumber.equals(PlayerNumber.SECOND_PLAYER)) {
+            return isWinOfSecondPlayer();
+        }
+        throw new IllegalArgumentException("invalid value for player identification");
     }
 
     private boolean isWinOfFirstPlayer() {

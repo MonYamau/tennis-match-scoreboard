@@ -17,17 +17,34 @@ public class OngoingMatch {
     private final TennisMatch currentMatch;
     private Integer winnerId;
 
-    public void recalculateScoreForMatch(int playerId) {
+    public void recalculateScoreFor(int playerId) {
+        checkMatchState();
         if (playerId == firstPlayerId) {
-            Optional<PlayerNumber> player = currentMatch.recalculateScoreFor(PlayerNumber.FIRST_PLAYER);
-            if (player.isPresent()) {
-                winnerId = firstPlayerId;
-            }
+            recalculateScoreForFirstPlayer();
         } else if (playerId == secondPlayerId) {
-            Optional<PlayerNumber> player = currentMatch.recalculateScoreFor(PlayerNumber.SECOND_PLAYER);
-            if (player.isPresent()) {
-                winnerId = secondPlayerId;
-            }
+            recalculateScoreForSecondPlayer();
+        } else {
+            throw new IllegalArgumentException("invalid value for player identification");
+        }
+    }
+
+    private void checkMatchState() {
+        if (winnerId != null) {
+            throw new IllegalStateException("the current match is over");
+        }
+    }
+
+    private void recalculateScoreForFirstPlayer() {
+        Optional<PlayerNumber> matchWinner = currentMatch.recalculateScoreFor(PlayerNumber.FIRST_PLAYER);
+        if (matchWinner.isPresent()) {
+            winnerId = firstPlayerId;
+        }
+    }
+
+    private void recalculateScoreForSecondPlayer() {
+        Optional<PlayerNumber> matchWinner = currentMatch.recalculateScoreFor(PlayerNumber.SECOND_PLAYER);
+        if (matchWinner.isPresent()) {
+            winnerId = secondPlayerId;
         }
     }
 }

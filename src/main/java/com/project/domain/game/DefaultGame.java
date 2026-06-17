@@ -32,8 +32,10 @@ public class DefaultGame implements GameMode {
     private void incrementScoreFor(PlayerNumber player) {
         if (player.equals(PlayerNumber.FIRST_PLAYER)) {
             firstPlayerScore = firstPlayerScore.next();
-        } else {
+        } else if (player.equals(PlayerNumber.SECOND_PLAYER)) {
             secondPlayerScore = secondPlayerScore.next();
+        } else {
+            throw new IllegalArgumentException("invalid value for counter increment");
         }
     }
 
@@ -41,7 +43,10 @@ public class DefaultGame implements GameMode {
         if (playerNumber.equals(PlayerNumber.FIRST_PLAYER)) {
             return isWinOfFirstPlayer();
         }
-        return isWinOfSecondPlayer();
+        if (playerNumber.equals(PlayerNumber.SECOND_PLAYER)) {
+            return isWinOfSecondPlayer();
+        }
+        throw new IllegalArgumentException("invalid value for player identification");
     }
 
     private boolean isWinOfFirstPlayer() {
