@@ -1,13 +1,15 @@
 package com.project.util;
 
 import com.project.exception.ConfigurationException;
+import lombok.experimental.UtilityClass;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
+@UtilityClass
 public class PropertiesUtil {
-    public static Properties getProperties(String fileName) {
+    public Properties getProperties(String fileName) {
         Properties properties = new Properties();
         try (InputStream inputStream = PropertiesUtil.class.getClassLoader().getResourceAsStream(fileName)) {
             if (inputStream == null) {

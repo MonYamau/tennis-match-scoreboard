@@ -1,13 +1,13 @@
 package com.project.util;
 
-public final class JspPages {
-    private final static String MAIN_PATH = "WEB-INF/view";
-    public final static String NEW_MATCH = MAIN_PATH + "/new-match.jsp";
-    public final static String MATCH_SCORE = MAIN_PATH + "/match-score.jsp";
-    public final static String MATCHES = MAIN_PATH + "/matches.jsp";
-    public final static String FINISHED_MATCH = MAIN_PATH + "/finished-match.jsp";
-    public final static String ERROR = MAIN_PATH + "/error.jsp";
+import lombok.experimental.UtilityClass;
 
-    private JspPages() {
-    }
+@UtilityClass
+public class JspPages {
+    private final String MAIN_PATH = "WEB-INF/view";
+    public final String NEW_MATCH = MAIN_PATH + "/new-match.jsp";
+    public final String MATCH_SCORE = MAIN_PATH + "/match-score.jsp";
+    public final String MATCHES = MAIN_PATH + "/matches.jsp";
+    public final String FINISHED_MATCH = MAIN_PATH + "/finished-match.jsp";
+    public final String ERROR = MAIN_PATH + "/error.jsp";
 }
