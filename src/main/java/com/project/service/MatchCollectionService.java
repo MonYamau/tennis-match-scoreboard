@@ -13,7 +13,6 @@ import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 public class MatchCollectionService {
-    private final static int LIMIT_VALUE = 6;
     private final static int UNIT_PAGE = 1;
 
     private final MatchMapper mapper = MatchMapper.INSTANCE;
@@ -21,17 +20,16 @@ public class MatchCollectionService {
 
     public MatchPageDto findMatchesByFilters(CollectionFilterDto requestDto) {
         String pattern = requestDto.namePattern();
+        int limit = requestDto.limitValue();
         boolean isEmptyFilter = pattern == null || pattern.isBlank();
-        int pageCount = isEmptyFilter ? countPages() : countPagesWithFilter(pattern);
+        int pageCount = isEmptyFilter ? countPages(limit) : countPagesWithFilter(limit, pattern);
         int page = selectCorrectPage(requestDto.page(), pageCount);
-        int offsetValue = (page - 1) * LIMIT_VALUE;
+        int offsetValue = (page - 1) * limit;
         List<Match> matches = isEmptyFilter
-                ? matchDao.findPage(offsetValue, LIMIT_VALUE)
-                : matchDao.findPageByFilters(pattern, offsetValue, LIMIT_VALUE);
-        List<MatchDto> matchesDto = matches.stream()
-                .map(mapper::toDto)
-                .collect(Collectors.toList());
-        return new MatchPageDto(page, pageCount, pattern, matchesDto);
+                ? matchDao.findPage(offsetValue, limit)
+                : matchDao.findPageByFilters(pattern, offsetValue, limit);
+        List<MatchDto> matchesDto = matches.stream().map(mapper::toDto).collect(Collectors.toList());
+        return new MatchPageDto(page, pageCount, pattern, limit, matchesDto);
     }
 
     private int selectCorrectPage(int selectedPage, int pageCount) {
@@ -41,19 +39,19 @@ public class MatchCollectionService {
         return UNIT_PAGE;
     }
 
-    private int countPages() {
+    private int countPages(int limit) {
         long countMatch = matchDao.countAll();
-        if (countMatch % LIMIT_VALUE != 0) {
-            return (int) ((countMatch / LIMIT_VALUE) + UNIT_PAGE);
+        if (countMatch % limit != 0) {
+            return (int) ((countMatch / limit) + UNIT_PAGE);
         }
-        return (int) (countMatch / LIMIT_VALUE);
+        return (int) (countMatch / limit);
     }
 
-    private int countPagesWithFilter(String namePattern) {
+    private int countPagesWithFilter(int limit, String namePattern) {
         long countMatch = matchDao.countAllByFilter(namePattern);
-        if (countMatch % LIMIT_VALUE != 0) {
-            return (int) ((countMatch / LIMIT_VALUE) + UNIT_PAGE);
+        if (countMatch % limit != 0) {
+            return (int) ((countMatch / limit) + UNIT_PAGE);
         }
-        return (int) (countMatch / LIMIT_VALUE);
+        return (int) (countMatch / limit);
     }
 }

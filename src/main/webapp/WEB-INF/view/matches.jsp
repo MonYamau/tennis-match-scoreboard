@@ -12,8 +12,19 @@
     <c:choose>
 
         <c:when test="${matchPage != null}">
-            <form class="name-filter" action="/matches" method="GET">
-                <input type="text" name="filter_by_player_name" placeholder="Поиск по имени...">
+            <form class="match-list-filter" action="/matches" method="GET">
+                <div class="filter-group">
+                <input type="text" name="filter_by_player_name" value="${matchPage.namePattern}" placeholder="Поиск по имени...">
+                </div>
+                <div class="filter-group">
+                    <label for="limit-select">Количество матчей: </label>
+                    <select id="limit-select" name="limit">
+                        <option value="5" ${matchPage.limitValue == 5 ? 'selected' : ''}>5</option>
+                        <option value="10" ${matchPage.limitValue == 10 ? 'selected' : ''}>10</option>
+                        <option value="15" ${matchPage.limitValue == 15 ? 'selected' : ''}>15</option>
+                        <option value="20" ${matchPage.limitValue == 20 ? 'selected' : ''}>20</option>
+                    </select>
+                </div>
                 <button type="submit">искать</button>
             </form>
             <table>
@@ -61,7 +72,7 @@
                             <span>${page}</span>
                         </c:when>
                         <c:otherwise>
-                            <a href="/matches?page=${page}&filter_by_player_name=${matchPage.namePattern}">${page}</a>
+                            <a href="/matches?page=${page}&filter_by_player_name=${matchPage.namePattern}&limit=${matchPage.limitValue}">${page}</a>
                         </c:otherwise>
                     </c:choose>
                 </c:forEach>

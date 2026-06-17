@@ -36,6 +36,7 @@ public class MatchCollectionServlet extends BaseServlet {
     private CollectionFilterDto getRequestDtoForGetMethod(HttpServletRequest req) {
         int page = getNormalizedPage(req, "page");
         String namePattern = getNormalizedPattern(req, "filter_by_player_name");
-        return new CollectionFilterDto(page, namePattern);
+        int limitValue = getNormalizedLimit(req, "limit");
+        return new CollectionFilterDto(page, namePattern, limitValue);
     }
 }

@@ -11,9 +11,9 @@
     <%@include file="fragment/error-block.jsp" %>
     <form class="match-form" action="new-match" METHOD="POST">
         <label for="firstPlayer">Имя первого игрока</label>
-        <input type="text" id="firstPlayer" name="firstPlayer" required>
+        <input type="text" id="firstPlayer" name="firstPlayer" value="${param.firstPlayer}" required>
         <label for="secondPlayer">Имя второго игрока</label>
-        <input type="text" id="secondPlayer" name="secondPlayer" required>
+        <input type="text" id="secondPlayer" name="secondPlayer" value="${param.secondPlayer}" required>
         <button type="submit">начать</button>
     </form>
 </main>

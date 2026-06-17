@@ -12,6 +12,7 @@ import java.util.UUID;
 
 public class BaseServlet extends HttpServlet {
     private final static int DEFAULT_PAGE = 1;
+    private final static int DEFAULT_LIMIT = 5;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
@@ -42,8 +43,18 @@ public class BaseServlet extends HttpServlet {
             return DEFAULT_PAGE;
         }
         int page = convertNumber(pageParam);
-        ValidationUtil.validatePage(page, DEFAULT_PAGE);
+        ValidationUtil.validateNaturalNumber(page);
         return page;
+    }
+
+    protected int getNormalizedLimit(HttpServletRequest req, String parameter) {
+        String limitParam = req.getParameter(parameter);
+        if (limitParam == null) {
+            return DEFAULT_LIMIT;
+        }
+        int limit = convertNumber(limitParam);
+        ValidationUtil.validateNaturalNumber(limit);
+        return limit;
     }
 
     protected UUID getNormalizedUuid(HttpServletRequest req, String parameter) {
@@ -58,7 +69,7 @@ public class BaseServlet extends HttpServlet {
         try {
             return Integer.parseInt(parameter);
         } catch (NumberFormatException e) {
-            throw new IncorrectInputException("Incorrect number format (a natural number is expected)");
+            throw new IncorrectInputException("Incorrect number format");
         }
     }
 }

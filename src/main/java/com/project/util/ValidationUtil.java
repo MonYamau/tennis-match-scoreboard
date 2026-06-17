@@ -7,6 +7,7 @@ import java.util.regex.Pattern;
 
 @UtilityClass
 public class ValidationUtil {
+    private final int DEFAULT_UNIT = 1;
     private final int NAME_MAX_LENGTH = 40;
     private final Pattern NAME_PATTERN = Pattern.compile("^[a-zA-Zа-яА-ЯёЁ ]+$");
 
@@ -27,8 +28,8 @@ public class ValidationUtil {
         }
     }
 
-    public void validatePage(int page, int defaultPage) {
-        if (page < defaultPage) {
+    public void validateNaturalNumber(int value) {
+        if (value < DEFAULT_UNIT) {
             throw new IncorrectInputException("Incorrect number format (a natural number is expected)");
         }
     }
