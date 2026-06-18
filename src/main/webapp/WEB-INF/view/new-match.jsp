@@ -9,7 +9,7 @@
 <main>
     <h1>Форма для регистрации</h1>
     <%@include file="fragment/error-block.jsp" %>
-    <form class="match-form" action="new-match" METHOD="POST">
+    <form class="match-form" action="${pageContext.request.contextPath}/new-match" METHOD="POST">
         <label for="firstPlayer">Имя первого игрока</label>
         <input type="text" id="firstPlayer" name="firstPlayer" value="${param.firstPlayer}" required>
         <label for="secondPlayer">Имя второго игрока</label>

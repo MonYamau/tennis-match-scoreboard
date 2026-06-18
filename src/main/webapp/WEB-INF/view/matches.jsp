@@ -12,7 +12,7 @@
     <c:choose>
 
         <c:when test="${matchPage != null}">
-            <form class="match-list-filter" action="/matches" method="GET">
+            <form class="match-list-filter" action="${pageContext.request.contextPath}/matches" method="GET">
                 <div class="filter-group">
                 <input type="text" name="filter_by_player_name" value="${matchPage.namePattern}" placeholder="Поиск по имени...">
                 </div>
@@ -72,7 +72,7 @@
                             <span>${page}</span>
                         </c:when>
                         <c:otherwise>
-                            <a href="/matches?page=${page}&filter_by_player_name=${matchPage.namePattern}&limit=${matchPage.limitValue}">${page}</a>
+                            <a href="${pageContext.request.contextPath}/matches?page=${page}&filter_by_player_name=${matchPage.namePattern}&limit=${matchPage.limitValue}">${page}</a>
                         </c:otherwise>
                     </c:choose>
                 </c:forEach>
@@ -80,7 +80,7 @@
         </c:when>
 
         <c:otherwise>
-            <form class="matches-return-button" action="/matches" method="GET">
+            <form class="matches-return-button" action="${pageContext.request.contextPath}/matches" method="GET">
                 <button type="submit">Вернуться ко всему списку</button>
             </form>
         </c:otherwise>

@@ -8,10 +8,10 @@
 <main>
     <h1>Добро пожаловать!</h1>
     <div class="home-buttons">
-        <form action="/new-match" method="GET">
+        <form action="${pageContext.request.contextPath}/new-match" method="GET">
             <button type="submit">Начать новый матч</button>
         </form>
-        <form action="/matches" method="GET">
+        <form action="${pageContext.request.contextPath}/matches" method="GET">
             <button type="submit">Просмотреть завершённые матчи</button>
         </form>
     </div>

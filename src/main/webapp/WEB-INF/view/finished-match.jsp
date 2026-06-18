@@ -35,7 +35,7 @@
     </table>
 
     <div class="center-container">
-        <form action="/" method="GET">
+        <form action="${pageContext.request.contextPath}/" method="GET">
             <button type="submit">Вернуться на главную страницу</button>
         </form>
     </div>
