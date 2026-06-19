@@ -26,7 +26,8 @@ public class BaseServlet extends HttpServlet {
     protected String getNormalizedName(HttpServletRequest req, String parameter) {
         String name = req.getParameter(parameter);
         ValidationUtil.validateName(name);
-        return name.strip();
+        name = name.strip();
+        return name.substring(0, 1).toUpperCase() + name.substring(1);
     }
 
     protected String getNormalizedPattern(HttpServletRequest req, String parameter) {

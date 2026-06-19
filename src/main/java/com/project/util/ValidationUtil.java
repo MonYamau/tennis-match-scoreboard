@@ -9,7 +9,8 @@ import java.util.regex.Pattern;
 public class ValidationUtil {
     private final int DEFAULT_UNIT = 1;
     private final int NAME_MAX_LENGTH = 40;
-    private final Pattern NAME_PATTERN = Pattern.compile("^[a-zA-Zа-яА-ЯёЁ ]+$");
+    private final Pattern RUSSIAN_NAME_PATTERN = Pattern.compile("^[а-яА-ЯёЁ ]+$");
+    private final Pattern ENGLISH_NAME_PATTERN = Pattern.compile("^[a-zA-Z ]+$");
 
     public void validateNamesForUnique(String firstPlayerName, String secondPlayerName) {
         if (firstPlayerName.equalsIgnoreCase(secondPlayerName)) {
@@ -22,9 +23,9 @@ public class ValidationUtil {
         if (name.strip().length() > NAME_MAX_LENGTH) {
             throw new IncorrectInputException("The name must be less than " + NAME_MAX_LENGTH + " characters");
         }
-        if (!NAME_PATTERN.matcher(name).matches()) {
+        if (!RUSSIAN_NAME_PATTERN.matcher(name).matches() && !ENGLISH_NAME_PATTERN.matcher(name).matches()) {
             throw new IncorrectInputException
-                    ("Incorrect name format (only Latin and Cyrillic letters and spaces are allowed)");
+                    ("Incorrect name format (only Latin or Cyrillic letters and spaces are allowed)");
         }
     }
 
