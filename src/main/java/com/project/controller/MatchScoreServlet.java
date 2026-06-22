@@ -55,13 +55,13 @@ public class MatchScoreServlet extends BaseServlet {
     }
 
     private OngoingMatchRequestDto getRequestDtoForGetMethod(HttpServletRequest req) {
-        UUID uuid = getNormalizedUuid(req, "uuid");
+        UUID uuid = getNormalizedUuid(req);
         return new OngoingMatchRequestDto(uuid, null);
     }
 
     private OngoingMatchRequestDto getRequestDtoForPostMethod(HttpServletRequest req) {
-        UUID uuid = getNormalizedUuid(req, "uuid");
-        Integer winnerId = Integer.parseInt(req.getParameter("winnerId"));
+        UUID uuid = getNormalizedUuid(req);
+        Integer winnerId = getNormalizedWinnerId(req);
         return new OngoingMatchRequestDto(uuid, winnerId);
     }
 }

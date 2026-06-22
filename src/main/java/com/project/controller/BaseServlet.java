@@ -11,8 +11,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import java.util.UUID;
 
 public class BaseServlet extends HttpServlet {
-    private final static int DEFAULT_PAGE = 1;
-    private final static int DEFAULT_LIMIT = 5;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
@@ -30,36 +28,26 @@ public class BaseServlet extends HttpServlet {
         return name.substring(0, 1).toUpperCase() + name.substring(1);
     }
 
-    protected String getNormalizedPattern(HttpServletRequest req, String parameter) {
-        String pattern = req.getParameter(parameter);
+    protected String getNormalizedPattern(HttpServletRequest req) {
+        String pattern = req.getParameter("filter_by_player_name");
         if (pattern != null) {
             return pattern.strip();
         }
         return null;
     }
 
-    protected int getNormalizedPage(HttpServletRequest req, String parameter) {
-        String pageParam = req.getParameter(parameter);
-        if (pageParam == null) {
-            return DEFAULT_PAGE;
+    protected int getNormalizedNaturalNumber(HttpServletRequest req, String parameterName, int defaultValue) {
+        String parameter = req.getParameter(parameterName);
+        if (parameter == null) {
+            return defaultValue;
         }
-        int page = convertNumber(pageParam);
-        ValidationUtil.validateNaturalNumber(page);
-        return page;
+        int value = convertNumber(parameter);
+        ValidationUtil.validateNaturalNumber(value);
+        return value;
     }
 
-    protected int getNormalizedLimit(HttpServletRequest req, String parameter) {
-        String limitParam = req.getParameter(parameter);
-        if (limitParam == null) {
-            return DEFAULT_LIMIT;
-        }
-        int limit = convertNumber(limitParam);
-        ValidationUtil.validateNaturalNumber(limit);
-        return limit;
-    }
-
-    protected UUID getNormalizedUuid(HttpServletRequest req, String parameter) {
-        String uuidParam = req.getParameter(parameter);
+    protected UUID getNormalizedUuid(HttpServletRequest req) {
+        String uuidParam = req.getParameter("uuid");
         if (uuidParam == null || uuidParam.isBlank()) {
             throw new DataNotFoundException("Expected UUID-parameter is missing");
         }
@@ -68,6 +56,12 @@ public class BaseServlet extends HttpServlet {
         } catch (IllegalArgumentException e) {
             throw new IncorrectInputException("Incorrect UUID format");
         }
+    }
+
+    protected int getNormalizedWinnerId(HttpServletRequest req) {
+        String idParam = req.getParameter("winnerId");
+        ValidationUtil.validateParameter(idParam);
+        return convertNumber(idParam);
     }
 
     private int convertNumber(String parameter) {

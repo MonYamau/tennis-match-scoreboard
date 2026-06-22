@@ -13,6 +13,9 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class MatchCollectionServlet extends BaseServlet {
+    private final static int DEFAULT_PAGE = 1;
+    private final static int DEFAULT_LIMIT = 5;
+
     private MatchCollectionService matchCollectionService;
 
     @Override
@@ -34,9 +37,9 @@ public class MatchCollectionServlet extends BaseServlet {
     }
 
     private CollectionFilterDto getRequestDtoForGetMethod(HttpServletRequest req) {
-        int page = getNormalizedPage(req, "page");
-        String namePattern = getNormalizedPattern(req, "filter_by_player_name");
-        int limitValue = getNormalizedLimit(req, "limit");
-        return new CollectionFilterDto(page, namePattern, limitValue);
+        int page = getNormalizedNaturalNumber(req, "page", DEFAULT_PAGE);
+        int limit = getNormalizedNaturalNumber(req, "limit", DEFAULT_LIMIT);
+        String namePattern = getNormalizedPattern(req);
+        return new CollectionFilterDto(page, namePattern, limit);
     }
 }
