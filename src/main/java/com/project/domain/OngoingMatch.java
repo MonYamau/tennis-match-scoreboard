@@ -1,5 +1,6 @@
 package com.project.domain;
 
+import com.project.exception.IncorrectInputException;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -24,7 +25,7 @@ public class OngoingMatch {
         } else if (playerId == secondPlayerId) {
             recalculateScoreForSecondPlayer();
         } else {
-            throw new IllegalArgumentException("invalid value for player identification");
+            throw new IncorrectInputException("invalid value for player identification");
         }
     }
 

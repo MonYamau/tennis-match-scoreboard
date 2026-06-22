@@ -63,7 +63,11 @@ public class BaseServlet extends HttpServlet {
         if (uuidParam == null || uuidParam.isBlank()) {
             throw new DataNotFoundException("Expected UUID-parameter is missing");
         }
-        return UUID.fromString(uuidParam);
+        try {
+            return UUID.fromString(uuidParam);
+        } catch (IllegalArgumentException e) {
+            throw new IncorrectInputException("Incorrect UUID format");
+        }
     }
 
     private int convertNumber(String parameter) {

@@ -33,6 +33,7 @@ public class MatchScoreServlet extends BaseServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        setJspForError(req, JspPages.MATCH_SCORE);
         OngoingMatchRequestDto requestDto = getRequestDtoForGetMethod(req);
         OngoingMatchDto dto = matchScoreService.getMatch(requestDto);
         req.setAttribute("match", dto);
