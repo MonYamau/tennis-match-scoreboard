@@ -46,6 +46,7 @@ public class AppContextListener implements ServletContextListener {
         context.setAttribute("ScoreService", scoreService);
         context.setAttribute("CompletionService", completionService);
         context.setAttribute("CollectionService", collectionService);
+        context.setAttribute("SessionFactory", sessionFactory);
 
         log.info("Successful application initialization");
     }
