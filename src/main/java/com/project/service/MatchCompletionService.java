@@ -17,7 +17,6 @@ public class MatchCompletionService {
     private final MatchStorage matchStorage;
 
     public void finishMatch(OngoingMatchDto matchDto) {
-        matchStorage.delete(matchDto.uuid());
         Optional<Player> firstPlayer = playerDao.findByName(matchDto.firstPlayerName());
         Optional<Player> secondPlayer = playerDao.findByName(matchDto.secondPlayerName());
         if (firstPlayer.isEmpty() || secondPlayer.isEmpty()) {
@@ -29,6 +28,7 @@ public class MatchCompletionService {
         if (result.isEmpty()) {
             throw new IllegalStateException("Couldn't find the finished match");
         }
+        matchStorage.delete(matchDto.uuid());
     }
 
     private Player checkWinner(int winnerId, Player firstPlayer, Player secondPlayer) {
