@@ -8,26 +8,23 @@ import com.project.mapper.OngoingMatchMapper;
 import com.project.storage.MatchStorage;
 import lombok.RequiredArgsConstructor;
 
-import java.util.Optional;
-
 @RequiredArgsConstructor
 public class MatchScoreService {
     private final OngoingMatchMapper mapper = OngoingMatchMapper.INSTANCE;
     private final MatchStorage matchStorage;
 
     public OngoingMatchDto getMatch(OngoingMatchRequestDto requestDto) {
-        Optional<OngoingMatch> match = matchStorage.find(requestDto.uuid());
-        if (match.isEmpty()) {
-            throw new DataNotFoundException("Couldn't find the current match");
-        }
-        return mapper.toDto(match.get());
+        OngoingMatch match = matchStorage.find(requestDto.uuid())
+                .orElseThrow(() -> new DataNotFoundException("Couldn't find the current match"));
+        return mapper.toDto(match);
     }
 
     public OngoingMatchDto recalculateMatch(OngoingMatchRequestDto requestDto) {
-        OngoingMatchDto dto = getMatch(requestDto);
-        OngoingMatch match = mapper.toModel(dto);
-        match.recalculateScoreFor(requestDto.winnerId());
-        matchStorage.save(match);
-        return mapper.toDto(match);
+        OngoingMatch updatedMatch = matchStorage.update(requestDto.uuid(),
+                (match -> {
+                    match.recalculateScoreFor(requestDto.winnerId());
+                    return match;
+                }));
+        return mapper.toDto(updatedMatch);
     }
 }
